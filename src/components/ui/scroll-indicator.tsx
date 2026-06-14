@@ -5,7 +5,7 @@ export function ScrollIndicator() {
         className="font-mono text-[0.625rem] uppercase tracking-[0.15em]"
         style={{ color: "var(--text-muted)" }}
       >
-        Scroll
+        KAYDIR
       </span>
       <div className="dot" />
     </div>

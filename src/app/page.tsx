@@ -64,32 +64,32 @@ export default function Home() {
         </div>
 
         <div className="dark-zone">
-          <SectionMarquee text="ABOUT" direction="left" speed={22} />
+          <SectionMarquee text="HAKKIMDA" direction="left" speed={22} />
           <AboutSection />
         </div>
 
         <div className="light-zone">
-          <SectionMarquee text="SKILLS" direction="right" speed={18} />
+          <SectionMarquee text="YETENEKLER" direction="right" speed={18} />
           <SkillsSection />
         </div>
 
         <div className="dark-zone">
-          <SectionMarquee text="WORK" direction="left" speed={16} />
+          <SectionMarquee text="PROJELER" direction="left" speed={16} />
           <ProjectsSection />
         </div>
 
         <div className="light-zone">
-          <SectionMarquee text="DENEYİM & UZMANLIK" direction="right" speed={24} />
+          <SectionMarquee text="DENEYİM" direction="right" speed={24} />
           <ExperienceSection />
         </div>
 
         <div className="dark-zone">
-          <SectionMarquee text="EDUCATION" direction="left" speed={24} />
+          <SectionMarquee text="EĞİTİM" direction="left" speed={24} />
           <EducationSection />
         </div>
 
         <div className="light-zone">
-          <SectionMarquee text="GET IN TOUCH" direction="right" speed={26} />
+          <SectionMarquee text="İLETİŞİME GEÇİN" direction="right" speed={26} />
           <ContactSection />
         </div>
 

@@ -5,9 +5,9 @@ import { gsap } from "@/lib/gsap";
 import { ScrambleText } from "@/components/ui/scramble-text";
 
 const NAV_LINKS = [
-  { label: "About", href: "#about", number: "01" },
-  { label: "Work", href: "#work", number: "02" },
-  { label: "Contact", href: "#contact", number: "03" },
+  { label: "HAKKIMDA", href: "#about", number: "01" },
+  { label: "PROJELER", href: "#work", number: "02" },
+  { label: "İLETİŞİM", href: "#contact", number: "03" },
 ] as const;
 
 export function Navigation() {

@@ -361,7 +361,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               className="font-mono text-[0.6875rem] xl:text-[0.75rem] uppercase tracking-[0.1em] opacity-0"
               style={{ color: "var(--accent-raw)" }}
             >
-              Kurumsal iş birliklerine açık
+              YENİ PROJELERE AÇIK
             </span>
           </div>
         </div>
@@ -476,7 +476,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               className="font-mono text-[0.5rem] sm:text-[0.5625rem] uppercase tracking-[0.1em]"
               style={{ color: "var(--accent-raw)" }}
             >
-              Kurumsal iş birliklerine açık
+              YENİ PROJELERE AÇIK
             </span>
           </div>
         </div>
