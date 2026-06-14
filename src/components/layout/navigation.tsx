@@ -161,11 +161,11 @@ export function Navigation() {
           ═══════════════════════════════════════════ */}
       <div
         ref={navWrapRef}
-        className="dark-zone fixed top-0 left-0 right-0 z-50 hidden lg:block min-h-[80px] opacity-100"
+        className="dark-zone fixed top-0 left-0 right-0 z-50 hidden lg:block h-[80px] opacity-100"
         style={{
-          paddingLeft: "64px",
-          paddingRight: "64px",
-          paddingTop: "32px",
+          paddingLeft: "48px",
+          paddingRight: "48px",
+          paddingTop: "24px",
         }}
       >
         <nav aria-label="Main navigation">
@@ -237,61 +237,66 @@ export function Navigation() {
       </div>
 
       {/* ═══════════════════════════════════════════
-          MOBILE — Unchanged
+          MOBILE — Fixed bar + drawer
           ═══════════════════════════════════════════ */}
 
-      {/* Mobile: Fixed RD Logo */}
-      <a
-        href="#hero"
-        className="fixed top-5 left-5 z-[60] lg:hidden font-body font-medium text-[0.9375rem] tracking-[0.05em] uppercase opacity-100"
-        style={{
-          color: "var(--text)",
-        }}
-        aria-label="Back to top"
+      <header
+        className="dark-zone fixed top-0 left-0 right-0 z-[60] lg:hidden h-[60px] px-6 md:px-12 flex items-center justify-between"
+        aria-label="Mobile navigation"
       >
-        RD
-      </a>
+        <a
+          href="#hero"
+          className="font-body font-medium text-[0.9375rem] tracking-[0.05em] uppercase transition-opacity duration-300 hover:opacity-80 min-h-11 min-w-11 inline-flex items-center"
+          style={{ color: "var(--text)" }}
+          aria-label="Back to top"
+        >
+          RD
+        </a>
 
-      {/* Mobile: Hamburger */}
-      <button
-        ref={hamburgerRef}
-        className="mobile-hamburger fixed top-5 right-5 z-[60] lg:hidden flex items-center justify-center w-11 h-11 rounded-full opacity-100"
-        style={{
-          backgroundColor: drawerOpen ? "transparent" : "var(--surface)",
-          border: drawerOpen ? "none" : "1px solid var(--border-custom)",
-          backdropFilter: drawerOpen ? "none" : "blur(12px)",
-          WebkitBackdropFilter: drawerOpen ? "none" : "blur(12px)",
-        }}
-        onClick={() => setDrawerOpen((prev) => !prev)}
-        aria-label={drawerOpen ? "Close menu" : "Open menu"}
-        aria-expanded={drawerOpen}
-        aria-controls="mobile-nav-drawer"
-      >
-        <div className="relative w-5 h-3.5 flex flex-col justify-between" aria-hidden="true">
-          <span
-            className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
-            style={{
-              backgroundColor: "var(--text)",
-              transform: drawerOpen ? "translateY(5px) rotate(45deg)" : "none",
-            }}
-          />
-          <span
-            className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
-            style={{
-              backgroundColor: "var(--text)",
-              opacity: drawerOpen ? 0 : 1,
-              transform: drawerOpen ? "scaleX(0)" : "scaleX(1)",
-            }}
-          />
-          <span
-            className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
-            style={{
-              backgroundColor: "var(--text)",
-              transform: drawerOpen ? "translateY(-7px) rotate(-45deg)" : "none",
-            }}
-          />
-        </div>
-      </button>
+        <button
+          ref={hamburgerRef}
+          className="mobile-hamburger flex items-center justify-center gap-2 min-h-11 min-w-11 px-3 rounded-full transition-colors duration-300"
+          style={{
+            backgroundColor: drawerOpen ? "transparent" : "var(--surface)",
+            border: drawerOpen ? "none" : "1px solid var(--border-custom)",
+            backdropFilter: drawerOpen ? "none" : "blur(12px)",
+            WebkitBackdropFilter: drawerOpen ? "none" : "blur(12px)",
+            color: "var(--text)",
+          }}
+          onClick={() => setDrawerOpen((prev) => !prev)}
+          aria-label={drawerOpen ? "Close menu" : "Open menu"}
+          aria-expanded={drawerOpen}
+          aria-controls="mobile-nav-drawer"
+        >
+          <span className="font-mono text-[0.625rem] uppercase tracking-[0.14em]">
+            {drawerOpen ? "Close" : "Menu"}
+          </span>
+          <div className="relative w-4 h-3 flex flex-col justify-between" aria-hidden="true">
+            <span
+              className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
+              style={{
+                backgroundColor: "var(--text)",
+                transform: drawerOpen ? "translateY(4px) rotate(45deg)" : "none",
+              }}
+            />
+            <span
+              className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
+              style={{
+                backgroundColor: "var(--text)",
+                opacity: drawerOpen ? 0 : 1,
+                transform: drawerOpen ? "scaleX(0)" : "scaleX(1)",
+              }}
+            />
+            <span
+              className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
+              style={{
+                backgroundColor: "var(--text)",
+                transform: drawerOpen ? "translateY(-6px) rotate(-45deg)" : "none",
+              }}
+            />
+          </div>
+        </button>
+      </header>
 
       {/* Mobile: Backdrop */}
       <div
@@ -309,17 +314,17 @@ export function Navigation() {
       <div
         ref={drawerRef}
         id="mobile-nav-drawer"
-        className="mobile-drawer dark-zone fixed top-0 right-0 bottom-0 z-[56] lg:hidden flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-        style={{ width: "100vw", transform: drawerOpen ? "translateX(0)" : "translateX(100%)" }}
+        className="mobile-drawer dark-zone fixed top-0 right-0 bottom-0 z-[56] lg:hidden flex flex-col w-full max-w-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{ transform: drawerOpen ? "translateX(0)" : "translateX(100%)" }}
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
         aria-hidden={!drawerOpen}
         tabIndex={-1}
       >
-        <div className="pt-20" />
+        <div className="h-[60px] shrink-0" />
         <nav
-          className="flex-1 flex flex-col justify-center px-8 gap-1"
+          className="flex-1 flex flex-col justify-center px-6 md:px-12 gap-1"
           aria-label="Mobile navigation"
         >
           {NAV_LINKS.map((link, i) => (
@@ -327,7 +332,7 @@ export function Navigation() {
               key={link.label}
               href={link.href}
               onClick={handleLinkClick}
-              className="group flex items-baseline gap-4 py-4 transition-colors duration-200"
+              className="group flex items-baseline gap-4 min-h-11 py-3 transition-colors duration-200"
               style={{
                 borderBottom: i < NAV_LINKS.length - 1 ? "1px solid var(--border-custom)" : "none",
               }}
@@ -340,7 +345,7 @@ export function Navigation() {
                 {link.number}
               </span>
               <span
-                className="font-display font-semibold text-[1.75rem] tracking-[-0.02em] uppercase transition-colors duration-200 group-active:text-[var(--accent-raw)]"
+                className="font-display font-semibold text-4xl md:text-5xl tracking-[-0.02em] uppercase transition-colors duration-200 group-active:text-[var(--accent-raw)] text-balance"
                 style={{ color: "var(--text)" }}
               >
                 {link.label}
@@ -348,7 +353,7 @@ export function Navigation() {
             </a>
           ))}
         </nav>
-        <div className="px-8 pb-8 flex items-center justify-end">
+        <div className="px-6 md:px-12 pb-8 flex items-center justify-end">
           <span
             className="font-mono text-[0.5625rem] uppercase tracking-[0.1em]"
             style={{ color: "var(--text-muted)" }}

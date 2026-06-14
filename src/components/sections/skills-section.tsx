@@ -53,9 +53,8 @@ function SkillCell({ skill }: { skill: (typeof SKILLS)[number] }) {
       onMouseLeave={handleMouseLeave}
     >
       <h3
-        className="font-display font-bold tracking-[-0.03em]"
+        className="font-display font-bold text-balance text-4xl md:text-6xl tracking-[-0.03em]"
         style={{
-          fontSize: "var(--text-subheading)",
           color: "var(--text)",
           marginBottom: "clamp(14px, 1.2vw, 20px)",
         }}
@@ -141,9 +140,8 @@ function SoloCell({ skill }: { skill: (typeof SKILLS)[number] }) {
     >
       <div className="grid grid-cols-[1fr_1fr] gap-10 items-start">
         <h3
-          className="font-display font-bold tracking-[-0.03em]"
+          className="font-display font-bold text-balance text-4xl md:text-6xl tracking-[-0.03em]"
           style={{
-            fontSize: "var(--text-subheading)",
             color: "var(--text)",
           }}
         >

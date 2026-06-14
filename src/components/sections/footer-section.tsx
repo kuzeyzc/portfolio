@@ -113,7 +113,7 @@ export function FooterSection() {
             <Magnetic strength={0.3} radius={60}>
               <button
                 onClick={scrollToTop}
-                className="footer-top-btn flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300"
+                className="footer-top-btn flex items-center justify-center min-h-11 min-w-11 w-11 h-11 rounded-full transition-all duration-300"
                 style={{
                   border: "1.5px solid var(--border-custom)",
                   color: "var(--text-muted)",

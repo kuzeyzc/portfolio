@@ -98,6 +98,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         />
 
+        {/* Lock scroll position before hydration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "history.scrollRestoration='manual';window.scrollTo(0,0);",
+          }}
+        />
+
         {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
@@ -134,7 +141,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </a>
             <MeshGradient />
             <FloatingThemeToggle />
-            <main id="main-content" className="relative" style={{ zIndex: 1 }}>
+            <main id="main-content" className="relative overflow-x-hidden" style={{ zIndex: 1 }}>
               {children}
             </main>
             <Toaster />

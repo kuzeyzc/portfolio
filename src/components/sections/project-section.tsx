@@ -125,7 +125,7 @@ function WhyBuiltIt({ text }: { text: string }) {
           e.stopPropagation();
           setExpanded(!expanded);
         }}
-        className="flex items-center gap-2 font-mono uppercase tracking-[0.12em] transition-colors duration-300 cursor-pointer"
+        className="flex items-center gap-2 min-h-11 py-2 font-mono uppercase tracking-[0.12em] transition-colors duration-300 cursor-pointer"
         style={{ color: "var(--accent-raw)", fontSize: "var(--text-label)" }}
       >
         <ChevronDown
@@ -203,7 +203,7 @@ function MobileProjectCard({ project }: { project: Project }) {
   return (
     <div>
       {/* Tappable header */}
-      <button className="w-full text-left cursor-pointer" onClick={() => setExpanded(!expanded)}>
+      <button className="w-full min-h-11 text-left cursor-pointer py-2" onClick={() => setExpanded(!expanded)}>
         <div className="flex items-baseline justify-between gap-4">
           <div>
             <span
@@ -217,10 +217,9 @@ function MobileProjectCard({ project }: { project: Project }) {
               {project.number}
             </span>
             <h3
-              className="font-display font-bold tracking-[-0.04em] leading-[0.88] transition-colors duration-300"
+              className="font-display font-bold text-balance text-4xl md:text-5xl tracking-[-0.04em] leading-[0.88] transition-colors duration-300"
               style={{
                 color: expanded ? "var(--accent-raw)" : "var(--text)",
-                fontSize: "clamp(2rem, 8vw, 3rem)",
               }}
             >
               {project.name}
@@ -468,10 +467,9 @@ export function ProjectsSection() {
                           {project.number}
                         </span>
                         <h3
-                          className="typo-row-name font-display font-bold tracking-[-0.04em] leading-[0.85] transition-colors duration-400"
+                          className="typo-row-name font-display font-bold text-balance text-4xl md:text-6xl tracking-[-0.04em] leading-[0.85] transition-colors duration-400"
                           style={{
                             color: isExpanded ? "var(--accent-raw)" : "var(--text)",
-                            fontSize: "clamp(2.5rem, 5.5vw, 4.5rem)",
                           }}
                         >
                           {project.name}

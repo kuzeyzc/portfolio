@@ -426,10 +426,9 @@ export function AboutSection() {
             {/* Statement — Satoshi, subtitle size, entrance element */}
             <p
               ref={subheadRef}
-              className="font-body font-medium tracking-[-0.015em] leading-[1.35] mb-6 sm:mb-4 lg:mb-6 2xl:max-w-[77%]"
+              className="font-body font-medium text-balance text-4xl md:text-6xl tracking-[-0.015em] leading-[1.35] mb-6 sm:mb-4 lg:mb-6 2xl:max-w-[77%]"
               style={{
                 color: "var(--text)",
-                fontSize: "var(--text-heading)",
                 opacity: 0.8,
               }}
             >

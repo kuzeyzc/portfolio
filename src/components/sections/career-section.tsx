@@ -66,10 +66,9 @@ function MobileEntry({ entry }: { entry: CareerEntry }) {
 
       {/* Role */}
       <h3
-        className="font-display font-bold tracking-[-0.03em] leading-[0.92]"
+        className="font-display font-bold text-balance text-4xl md:text-5xl tracking-[-0.03em] leading-[0.92]"
         style={{
           color: "var(--text)",
-          fontSize: "clamp(1.75rem, 6vw, 2.25rem)",
           marginBottom: "clamp(6px, 1vw, 10px)",
         }}
       >
@@ -271,8 +270,8 @@ export function CareerSection({ id, entries }: CareerSectionProps) {
                     </div>
 
                     <h3
-                      className="font-display font-bold tracking-[-0.03em] leading-[0.92]"
-                      style={{ color: "var(--text)", fontSize: "var(--text-heading)" }}
+                      className="font-display font-bold text-balance text-4xl md:text-6xl tracking-[-0.03em] leading-[0.92]"
+                      style={{ color: "var(--text)" }}
                     >
                       {entry.role}
                     </h3>

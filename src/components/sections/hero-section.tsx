@@ -232,7 +232,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
         target={isDownload ? undefined : "_blank"}
         rel={isDownload ? undefined : "noopener noreferrer"}
         download={isDownload || undefined}
-        className="cursor-pointer transition-colors duration-200 flex items-center justify-center w-[32px] h-[32px] lg:w-[34px] lg:h-[34px]"
+        className="cursor-pointer transition-colors duration-200 flex items-center justify-center min-h-11 min-w-11 w-11 h-11 lg:w-[34px] lg:h-[34px] lg:min-h-0 lg:min-w-0"
         style={{ color: "var(--text-muted)" }}
         onMouseEnter={(e) => {
           e.currentTarget.style.color = "var(--text)";
@@ -255,7 +255,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
           ═══════════════════════════════════════════ */}
       <div
         ref={desktopContentRef}
-        className="relative z-[2] h-full hidden lg:flex flex-col px-16 pt-32 pb-6"
+        className="relative z-[2] h-full hidden lg:flex flex-col px-6 md:px-12 pt-32 pb-6"
         style={{ opacity: skipReveal ? 1 : 0 }}
       >
         {/* ── Top Strip: Role left, Clock right ── */}
@@ -283,10 +283,9 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
           {/* RAJ — left-aligned */}
           <h1
             data-hero-name
-            className="hero-name-line font-display font-bold leading-[0.82] tracking-[-0.04em] whitespace-nowrap"
+            className="hero-name-line font-display font-bold text-balance leading-[0.82] tracking-[-0.04em] whitespace-nowrap text-[clamp(3rem,18vw,26rem)]"
             style={{
               color: "var(--text)",
-              fontSize: "clamp(3.5rem, 18vw, 26rem)",
             }}
           >
             RAJ
@@ -310,10 +309,9 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
           {/* DESAI — right-aligned */}
           <h1
             data-hero-name
-            className="hero-name-line font-display font-bold leading-[0.82] tracking-[-0.04em] whitespace-nowrap text-right"
+            className="hero-name-line font-display font-bold text-balance leading-[0.82] tracking-[-0.04em] whitespace-nowrap text-right text-[clamp(3rem,18vw,26rem)]"
             style={{
               color: "var(--text)",
-              fontSize: "clamp(3.5rem, 18vw, 26rem)",
             }}
           >
             <span className="hero-name-text">DESAI</span>
@@ -377,7 +375,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
           ═══════════════════════════════════════════ */}
       <div
         ref={mobileContentRef}
-        className="relative z-[2] h-full flex flex-col px-6 pt-24 pb-6 lg:hidden"
+        className="relative z-[2] h-full flex flex-col px-6 md:px-12 pt-[4.5rem] pb-6 lg:hidden"
         style={{ opacity: skipReveal ? 1 : 0 }}
       >
         {/* ── Top Strip: Icons ── */}
@@ -387,7 +385,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               href="https://github.com/RajDesai-18"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-8 h-8"
+              className="flex items-center justify-center min-h-11 min-w-11"
               style={{ color: "var(--text-muted)" }}
               aria-label="GitHub"
             >
@@ -397,7 +395,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               href="https://linkedin.com/in/rajdesai18"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-8 h-8"
+              className="flex items-center justify-center min-h-11 min-w-11"
               style={{ color: "var(--text-muted)" }}
               aria-label="LinkedIn"
             >
@@ -406,7 +404,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
             <a
               href="/RajDesai_Resume.pdf"
               download
-              className="flex items-center justify-center w-8 h-8"
+              className="flex items-center justify-center min-h-11 min-w-11"
               style={{ color: "var(--text-muted)" }}
               aria-label="Download Resume"
             >
@@ -426,10 +424,9 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
           {/* RAJ — left-aligned */}
           <h1
             data-hero-name
-            className="hero-name-line font-display font-bold leading-[0.82] tracking-[-0.04em] whitespace-nowrap"
+            className="hero-name-line font-display font-bold text-balance leading-[0.82] tracking-[-0.04em] whitespace-nowrap text-[clamp(2.75rem,22vw,8rem)]"
             style={{
               color: "var(--text)",
-              fontSize: "clamp(4rem, 24vw, 8rem)",
             }}
           >
             RAJ
@@ -453,10 +450,9 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
           {/* DESAI — left-aligned on mobile */}
           <h1
             data-hero-name
-            className="hero-name-line font-display font-bold leading-[0.82] tracking-[-0.04em] whitespace-nowrap"
+            className="hero-name-line font-display font-bold text-balance leading-[0.82] tracking-[-0.04em] whitespace-nowrap text-[clamp(2.75rem,22vw,8rem)]"
             style={{
               color: "var(--text)",
-              fontSize: "clamp(4rem, 24vw, 8rem)",
             }}
           >
             <span className="hero-name-text">DESAI</span>

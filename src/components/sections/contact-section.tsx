@@ -224,10 +224,9 @@ export function ContactSection() {
         {/* Heading — Satoshi Medium, conversational invitation */}
         <p
           ref={headingRef}
-          className="font-body font-medium leading-[1.25] tracking-[-0.015em]"
+          className="font-body font-medium text-balance text-4xl md:text-6xl leading-[1.25] tracking-[-0.015em]"
           style={{
             color: "var(--text)",
-            fontSize: "var(--text-subheading)",
           }}
         >
           Got something interesting to build, discuss, or explore?
@@ -296,7 +295,7 @@ export function ContactSection() {
           <Button
             type="submit"
             disabled={sending}
-            className="contact-submit w-full sm:w-auto h-12 px-8 rounded-lg font-body font-medium text-[0.875rem] sm:text-[0.9375rem] transition-all duration-300 disabled:opacity-50"
+            className="contact-submit w-full sm:w-auto min-h-11 h-12 px-8 rounded-lg font-body font-medium text-[0.875rem] sm:text-[0.9375rem] transition-all duration-300 disabled:opacity-50"
             style={{
               backgroundColor: "var(--accent-raw)",
               color: "var(--primary-foreground)",
