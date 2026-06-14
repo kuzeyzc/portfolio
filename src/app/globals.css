@@ -989,14 +989,6 @@ html.lenis body {
   will-change: transform, opacity;
 }
 
-.skill-block {
-  background-color: rgba(10, 10, 10, 0.04);
-}
-
-.dark-zone .skill-block {
-  background-color: rgba(250, 250, 250, 0.04);
-}
-
 /* ───────────────────────────────────────────
    CSS Gradient Fallback Orbs
    (for low-end devices without WebGL)

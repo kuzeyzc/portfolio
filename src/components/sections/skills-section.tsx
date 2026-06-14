@@ -1,146 +1,66 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { Container } from "@/components/layout/container";
 import { SKILLS } from "@/lib/skills-data";
 
+const SKILL_BADGE_CLASS =
+  "inline-flex items-center px-5 py-2.5 rounded-full border border-black/10 bg-black/5 text-sm font-medium text-black/80 transition-all duration-300 ease-out cursor-default hover:-translate-y-1 hover:bg-primary hover:text-primary-foreground hover:border-primary hover:shadow-[0_8px_16px_-6px_rgba(37,99,235,0.4)]";
+
 /* ──────────────────────────────────────────────────────────
-   SKILL CELL — category name + grid blocks with proximity glow
+   SKILL BADGES — interactive pills
    ────────────────────────────────────────────────────────── */
 
-function SkillCell({ skill }: { skill: (typeof SKILLS)[number] }) {
-  const blocksRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!blocksRef.current) return;
-    const blocks = blocksRef.current.children;
-    const rect = blocksRef.current.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-
-    for (let i = 0; i < blocks.length; i++) {
-      const block = blocks[i] as HTMLElement;
-      const br = block.getBoundingClientRect();
-      const bx = br.left - rect.left + br.width / 2;
-      const by = br.top - rect.top + br.height / 2;
-      const dist = Math.sqrt((mx - bx) ** 2 + (my - by) ** 2);
-      const maxDist = 200;
-      const intensity = Math.max(0, 1 - dist / maxDist);
-
-      block.style.backgroundColor = `rgba(37, 99, 235, ${(intensity * 0.18).toFixed(3)})`;
-      block.style.opacity = `${(0.4 + intensity * 0.6).toFixed(2)}`;
-      block.style.color = intensity > 0.5 ? "var(--accent-raw)" : "";
-    }
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    if (!blocksRef.current) return;
-    const blocks = blocksRef.current.children;
-    for (let i = 0; i < blocks.length; i++) {
-      const block = blocks[i] as HTMLElement;
-      block.style.backgroundColor = "rgba(10, 10, 10, 0.04)";
-      block.style.opacity = "0.55";
-      block.style.color = "";
-    }
-  }, []);
-
+function SkillBadges({ pills }: { pills: string[] }) {
   return (
-    <div
-      className="skill-cell"
-      style={{ padding: "clamp(24px, 2.5vw, 36px) clamp(20px, 2vw, 32px)" }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <h3
-        className="font-display font-bold text-balance text-4xl md:text-6xl tracking-[-0.03em]"
-        style={{
-          color: "var(--text)",
-          marginBottom: "clamp(14px, 1.2vw, 20px)",
-        }}
-      >
-        {skill.name}
-      </h3>
-
-      <div
-        ref={blocksRef}
-        className="grid gap-[2px]"
-        style={{
-          gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-        }}
-      >
-        {skill.pills.map((tech) => (
-          <div
-            key={tech}
-            className="skill-block font-mono tracking-[0.02em]"
-            style={{
-              padding: "10px 12px",
-              fontSize: "var(--text-micro)",
-              color: "var(--text)",
-              opacity: 0.55,
-              backgroundColor: "rgba(10, 10, 10, 0.04)",
-              transition:
-                "background-color 0.15s ease-out, opacity 0.15s ease-out, color 0.15s ease-out",
-            }}
-          >
-            {tech}
-          </div>
-        ))}
-      </div>
+    <div className="flex flex-wrap gap-4">
+      {pills.map((tech) => (
+        <div key={tech} className={SKILL_BADGE_CLASS}>
+          {tech}
+        </div>
+      ))}
     </div>
   );
 }
 
 /* ──────────────────────────────────────────────────────────
-   SOLO CELL — full-width Tooling row (name left, blocks right)
+   SKILL CELL — category name + skill badges
    ────────────────────────────────────────────────────────── */
 
-function SoloCell({ skill }: { skill: (typeof SKILLS)[number] }) {
-  const blocksRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!blocksRef.current) return;
-    const blocks = blocksRef.current.children;
-    const rect = blocksRef.current.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-
-    for (let i = 0; i < blocks.length; i++) {
-      const block = blocks[i] as HTMLElement;
-      const br = block.getBoundingClientRect();
-      const bx = br.left - rect.left + br.width / 2;
-      const by = br.top - rect.top + br.height / 2;
-      const dist = Math.sqrt((mx - bx) ** 2 + (my - by) ** 2);
-      const maxDist = 200;
-      const intensity = Math.max(0, 1 - dist / maxDist);
-
-      block.style.backgroundColor = `rgba(37, 99, 235, ${(intensity * 0.18).toFixed(3)})`;
-      block.style.opacity = `${(0.4 + intensity * 0.6).toFixed(2)}`;
-      block.style.color = intensity > 0.5 ? "var(--accent-raw)" : "";
-    }
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    if (!blocksRef.current) return;
-    const blocks = blocksRef.current.children;
-    for (let i = 0; i < blocks.length; i++) {
-      const block = blocks[i] as HTMLElement;
-      block.style.backgroundColor = "rgba(10, 10, 10, 0.04)";
-      block.style.opacity = "0.55";
-      block.style.color = "";
-    }
-  }, []);
-
+function SkillCell({ skill }: { skill: (typeof SKILLS)[number] }) {
   return (
     <div
       className="skill-cell"
       style={{ padding: "clamp(24px, 2.5vw, 36px) clamp(20px, 2vw, 32px)" }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
-      <div className="grid grid-cols-[1fr_1fr] gap-10 items-start">
+      <h3
+        className="font-display font-bold text-balance text-4xl md:text-6xl tracking-[-0.03em] mb-8 sm:mb-10 lg:mb-12"
+        style={{
+          color: "var(--text)",
+        }}
+      >
+        {skill.name}
+      </h3>
+
+      <SkillBadges pills={skill.pills} />
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   SOLO CELL — full-width row (name left, badges right)
+   ────────────────────────────────────────────────────────── */
+
+function SoloCell({ skill }: { skill: (typeof SKILLS)[number] }) {
+  return (
+    <div
+      className="skill-cell"
+      style={{ padding: "clamp(24px, 2.5vw, 36px) clamp(20px, 2vw, 32px)" }}
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(220px,0.9fr)_1.4fr] gap-8 lg:gap-14 xl:gap-16 items-start">
         <h3
-          className="font-display font-bold text-balance text-4xl md:text-6xl tracking-[-0.03em]"
+          className="font-display font-bold text-balance text-4xl md:text-6xl tracking-[-0.03em] lg:pt-1"
           style={{
             color: "var(--text)",
           }}
@@ -148,31 +68,7 @@ function SoloCell({ skill }: { skill: (typeof SKILLS)[number] }) {
           {skill.name}
         </h3>
 
-        <div
-          ref={blocksRef}
-          className="grid gap-[2px]"
-          style={{
-            gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-          }}
-        >
-          {skill.pills.map((tech) => (
-            <div
-              key={tech}
-              className="skill-block font-mono tracking-[0.02em]"
-              style={{
-                padding: "10px 12px",
-                fontSize: "var(--text-micro)",
-                color: "var(--text)",
-                opacity: 0.55,
-                backgroundColor: "rgba(10, 10, 10, 0.04)",
-                transition:
-                  "background-color 0.15s ease-out, opacity 0.15s ease-out, color 0.15s ease-out",
-              }}
-            >
-              {tech}
-            </div>
-          ))}
-        </div>
+        <SkillBadges pills={skill.pills} />
       </div>
     </div>
   );
