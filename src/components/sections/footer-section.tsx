@@ -87,7 +87,7 @@ export function FooterSection() {
               fontSize: "clamp(3.5rem, 18vw, 16.75rem)",
             }}
           >
-            RAJ DESAI
+            NORTH BOUND
           </span>
         </div>
 
@@ -105,7 +105,7 @@ export function FooterSection() {
             className="font-mono text-[0.5625rem] sm:text-[0.625rem] xl:text-[0.6875rem] uppercase tracking-[0.1em] order-2 sm:order-1"
             style={{ color: "var(--text-muted)" }}
           >
-            All rights reserved &copy; {new Date().getFullYear()} Raj Desai
+            All rights reserved &copy; {new Date().getFullYear()} North Bound
           </p>
 
           {/* Center: Back to top */}
@@ -132,7 +132,7 @@ export function FooterSection() {
             style={{ color: "var(--text-muted)" }}
           >
             Designed &amp; built with <span style={{ color: "var(--accent-raw)" }}>&#10084;</span>{" "}
-            by Raj
+            by North Bound
           </p>
         </div>
       </Container>

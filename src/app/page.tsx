@@ -79,7 +79,7 @@ export default function Home() {
         </div>
 
         <div className="light-zone">
-          <SectionMarquee text="EXPERIENCE" direction="right" speed={24} />
+          <SectionMarquee text="DENEYİM & UZMANLIK" direction="right" speed={24} />
           <ExperienceSection />
         </div>
 

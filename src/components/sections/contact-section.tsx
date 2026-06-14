@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { CONTACT_LINKS } from "@/lib/contact-data";
+import { SITE_LINKS } from "@/lib/site-links";
 import { ArrowRight, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 
@@ -19,7 +20,6 @@ const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 export function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLParagraphElement>(null);
-  const sublineRef = useRef<HTMLParagraphElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
   const stripsRef = useRef<HTMLDivElement>(null);
@@ -82,7 +82,7 @@ export function ContactSection() {
       } catch {
         toast.error("Something went wrong. Try emailing me directly.", {
           icon: <AlertCircle size={18} />,
-          description: "desai.raj1807@gmail.com",
+          description: SITE_LINKS.email.replace("mailto:", ""),
         });
       } finally {
         setSending(false);
@@ -98,16 +98,10 @@ export function ContactSection() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion) {
-      gsap.set(
-        [
-          headingRef.current,
-          sublineRef.current,
-          formRef.current,
-          dividerRef.current,
-          stripsRef.current,
-        ],
-        { opacity: 1, y: 0 }
-      );
+      gsap.set([headingRef.current, formRef.current, dividerRef.current, stripsRef.current], {
+        opacity: 1,
+        y: 0,
+      });
       return;
     }
 
@@ -130,23 +124,6 @@ export function ContactSection() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 70%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-
-      // Subline fade
-      gsap.fromTo(
-        sublineRef.current,
-        { opacity: 0, y: 16 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 65%",
             toggleActions: "play none none none",
           },
         }
@@ -229,16 +206,8 @@ export function ContactSection() {
             color: "var(--text)",
           }}
         >
-          Got something interesting to build, discuss, or explore?
-        </p>
-
-        {/* Subline */}
-        <p
-          ref={sublineRef}
-          className="mt-3 sm:mt-4 font-body font-medium text-lg sm:text-xl"
-          style={{ color: "var(--text)", opacity: 0 }}
-        >
-          I&apos;d love to hear from you.
+          Hayalinizdeki her fikri kusursuz bir tasarıma, karmaşık ihtiyaçlarınızı ise akıllı
+          yazılımlara dönüştürelim. İletişime geçin.
         </p>
 
         {/* Contact Form */}

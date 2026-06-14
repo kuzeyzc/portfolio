@@ -3,6 +3,12 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap, SplitText } from "@/lib/gsap";
 import { Container } from "@/components/layout/container";
+import {
+  ABOUT_HEADLINE,
+  ABOUT_PHILOSOPHY,
+  ABOUT_AVAILABILITY,
+  ABOUT_INTERESTS,
+} from "@/lib/about-data";
 import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────
@@ -51,20 +57,12 @@ const TRAVEL_PHOTOS = [
 /* ── Spotify playlists ── */
 const SPOTIFY_PLAYLISTS = [
   {
-    id: "3HPsMBw0lXA2wbvYrq7fRA",
-    name: "indie acoustics.",
+    id: "37i9dQZF1DX4sWSpwq3LiO",
+    name: "Deep Focus",
   },
   {
-    id: "7irjVFMTVAoMuBYlLh8WCg",
-    name: "Soft reset",
-  },
-  {
-    id: "6hWAfY0iBxDXmZO5dM9BL9",
-    name: "Lo-fi Chill 懐",
-  },
-  {
-    id: "5xR09OH1eJSx8CyTjGi8sk",
-    name: "After Hours Only",
+    id: "37i9dQZF1DWXe9gFZPnmgt",
+    name: "Flow State",
   },
 ];
 
@@ -432,8 +430,7 @@ export function AboutSection() {
                 opacity: 0.8,
               }}
             >
-              I&apos;m an engineer, builder, &amp; designer -- always chasing the next thing worth
-              making.
+              {ABOUT_HEADLINE}
             </p>
 
             {/* Body content */}
@@ -447,10 +444,7 @@ export function AboutSection() {
                   opacity: 0.85,
                 }}
               >
-                I grew up in Mumbai, moved to Dallas for my masters, and somewhere along the way got
-                obsessed with building software that actually feels good to use. I think deeply
-                about products, the thought behind them, and why they should exist in the first
-                place.
+                {ABOUT_PHILOSOPHY}
               </p>
 
               {/* P2 — Availability */}
@@ -462,33 +456,13 @@ export function AboutSection() {
                   opacity: 0.85,
                 }}
               >
-                Currently open to{" "}
-                <span className="font-medium" style={{ color: "var(--accent-raw)" }}>
-                  full-time roles
-                </span>{" "}
-                starting July 2026.
+                {ABOUT_AVAILABILITY}
               </p>
 
               {/* P3 — Interests */}
               <div>
-                <p
-                  className="font-body leading-[1.7] mb-2"
-                  style={{
-                    color: "var(--text)",
-                    fontSize: "var(--text-body)",
-                    opacity: 0.85,
-                  }}
-                >
-                  Outside of engineering, building, and designing, I&apos;m:
-                </p>
                 <ul className="space-y-1.5">
-                  {[
-                    "reading anything that makes me better at what I do",
-                    "scrolling YouTube for what's new in tech and cars",
-                    "discovering music nobody's heard of yet",
-                    "always out with the camera, chasing skies and sunsets",
-                    "finding new anime to binge",
-                  ].map((item) => (
+                  {ABOUT_INTERESTS.map((item) => (
                     <li key={item} className="flex items-baseline gap-2.5">
                       <span
                         className="w-[5px] h-[5px] rounded-full shrink-0 relative top-[-2px]"

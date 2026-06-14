@@ -358,7 +358,7 @@ export function Navigation() {
             className="font-mono text-[0.5625rem] uppercase tracking-[0.1em]"
             style={{ color: "var(--text-muted)" }}
           >
-            Raj Desai · 2026
+            North Bound · 2026
           </span>
         </div>
       </div>

@@ -227,8 +227,7 @@ export function SkillsSection() {
   }, []);
 
   const row1 = [SKILLS[0], SKILLS[1]];
-  const row2 = [SKILLS[2], SKILLS[3]];
-  const solo = SKILLS[4];
+  const solo = SKILLS[2];
 
   return (
     <section ref={sectionRef} id="skills" className="relative w-full overflow-hidden">
@@ -253,25 +252,7 @@ export function SkillsSection() {
               <SkillCell skill={row1[1]} />
             </div>
 
-            {/* ── Row 2: AI/ML | Architecture ── */}
-            <div
-              className="skill-hr h-px w-full origin-left"
-              style={{ backgroundColor: "var(--border-custom)" }}
-            />
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_1px_1fr]">
-              <SkillCell skill={row2[0]} />
-              <div
-                className="skill-vr hidden md:block origin-top"
-                style={{ backgroundColor: "var(--border-custom)" }}
-              />
-              <div
-                className="md:hidden h-px w-full"
-                style={{ backgroundColor: "var(--border-custom)" }}
-              />
-              <SkillCell skill={row2[1]} />
-            </div>
-
-            {/* ── Row 3: Tooling (full width) ── */}
+            {/* ── Row 2: AI & Autonomous Systems (full width) ── */}
             <div
               className="skill-hr h-px w-full origin-left"
               style={{ backgroundColor: "var(--border-custom)" }}

@@ -6,7 +6,8 @@ import { gsap, SplitText } from "@/lib/gsap";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
 import { Magnetic } from "@/components/ui/magnetic";
 import { LiveClock } from "@/components/ui/live-clock";
-import { Github, Linkedin, FileDown } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
+import { SITE_LINKS } from "@/lib/site-links";
 
 const HERO_CHAR_FROM = {
   opacity: 0,
@@ -36,7 +37,16 @@ interface HeroSectionProps {
   onReady?: () => void;
 }
 
-const MARQUEE_ITEMS = ["DESIGN", "BUILD", "AUTOMATE", "SHIP", "SCALE", "REFINE"];
+const MARQUEE_ITEMS = [
+  "TASARIM",
+  "FRONT-END",
+  "BACK-END",
+  "YAPAY ZEKA",
+  "OTONOM SİSTEMLER",
+  "KURUMSAL KİMLİK",
+  "UI/UX",
+  "SOSYAL MEDYA",
+];
 
 export function HeroSection({ revealed = false, skipReveal = false, onReady }: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -265,7 +275,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               className="font-mono text-[0.6875rem] xl:text-[0.75rem] uppercase tracking-[0.12em]"
               style={{ color: "var(--text-muted)" }}
             >
-              Software Engineer
+              FULL-STACK DEVELOPER &amp; GRAPHIC DESIGNER
             </span>
             <LiveClock />
           </div>
@@ -288,7 +298,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               color: "var(--text)",
             }}
           >
-            RAJ
+            NORTH
           </h1>
 
           {/* ── Marquee Strip ── */}
@@ -314,7 +324,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               color: "var(--text)",
             }}
           >
-            <span className="hero-name-text">DESAI</span>
+            <span className="hero-name-text">BOUND</span>
             <span className="hero-accent-dot" data-hero-dot aria-hidden="true" />
           </h1>
 
@@ -324,11 +334,8 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
             className="font-body text-[1rem] xl:text-[1.2625rem] text-right mt-3 opacity-0"
             style={{ color: "var(--text)" }}
           >
-            Exploring &amp; Building{" "}
-            <span className="font-semibold" style={{ color: "var(--accent-raw)" }}>
-              Good Sh!t
-            </span>{" "}
-            since 2023
+            2018&apos;den bu yana estetiği mühendislikle harmanlıyor; markalar için kusursuz
+            dijital deneyimler ve otonom sistemler inşa ediyorum.
           </p>
         </div>
 
@@ -341,18 +348,8 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
           />
           <div className="flex items-end justify-between">
             <div data-hero-fade className="flex items-center gap-3 opacity-0">
-              {renderIconLink("https://github.com/RajDesai-18", "GitHub", <Github size={16} />)}
-              {renderIconLink(
-                "https://linkedin.com/in/rajdesai18",
-                "LinkedIn",
-                <Linkedin size={16} />
-              )}
-              {renderIconLink(
-                "/RajDesai_Resume.pdf",
-                "Download Resume",
-                <FileDown size={16} />,
-                true
-              )}
+              {renderIconLink(SITE_LINKS.github, "GitHub", <Github size={16} />)}
+              {renderIconLink(SITE_LINKS.linkedin, "LinkedIn", <Linkedin size={16} />)}
             </div>
 
             <div data-hero-scroll className="opacity-0">
@@ -364,7 +361,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               className="font-mono text-[0.6875rem] xl:text-[0.75rem] uppercase tracking-[0.1em] opacity-0"
               style={{ color: "var(--accent-raw)" }}
             >
-              Available for work · July 2026
+              Kurumsal iş birliklerine açık
             </span>
           </div>
         </div>
@@ -382,7 +379,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
         <div className="shrink-0">
           <div data-hero-fade className="flex items-center gap-2 opacity-0">
             <a
-              href="https://github.com/RajDesai-18"
+              href={SITE_LINKS.github}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center min-h-11 min-w-11"
@@ -392,7 +389,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               <Github size={15} />
             </a>
             <a
-              href="https://linkedin.com/in/rajdesai18"
+              href={SITE_LINKS.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center min-h-11 min-w-11"
@@ -400,15 +397,6 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               aria-label="LinkedIn"
             >
               <Linkedin size={15} />
-            </a>
-            <a
-              href="/RajDesai_Resume.pdf"
-              download
-              className="flex items-center justify-center min-h-11 min-w-11"
-              style={{ color: "var(--text-muted)" }}
-              aria-label="Download Resume"
-            >
-              <FileDown size={15} />
             </a>
           </div>
 
@@ -429,7 +417,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               color: "var(--text)",
             }}
           >
-            RAJ
+            NORTH
           </h1>
 
           {/* Marquee Strip */}
@@ -455,7 +443,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               color: "var(--text)",
             }}
           >
-            <span className="hero-name-text">DESAI</span>
+            <span className="hero-name-text">BOUND</span>
             <span className="hero-accent-dot" data-hero-dot aria-hidden="true" />
           </h1>
 
@@ -465,11 +453,8 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
             className="font-body text-[0.9375rem] sm:text-[1rem] leading-[1.4] mt-3 opacity-0"
             style={{ color: "var(--text-muted)" }}
           >
-            Exploring &amp; Building{" "}
-            <span className="font-semibold" style={{ color: "var(--accent-raw)" }}>
-              Good Sh!t
-            </span>{" "}
-            since 2023
+            2018&apos;den bu yana estetiği mühendislikle harmanlıyor; markalar için kusursuz
+            dijital deneyimler ve otonom sistemler inşa ediyorum.
           </p>
         </div>
 
@@ -485,13 +470,13 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               className="font-mono text-[0.5625rem] sm:text-[0.625rem] uppercase tracking-[0.1em]"
               style={{ color: "var(--text-muted)" }}
             >
-              Software Engineer
+              FULL-STACK DEVELOPER &amp; GRAPHIC DESIGNER
             </span>
             <span
               className="font-mono text-[0.5rem] sm:text-[0.5625rem] uppercase tracking-[0.1em]"
               style={{ color: "var(--accent-raw)" }}
             >
-              Available · July 2026
+              Kurumsal iş birliklerine açık
             </span>
           </div>
         </div>

@@ -2,33 +2,29 @@ import type { CareerEntry } from "@/components/sections/career-section";
 
 export const EXPERIENCE_ENTRIES: CareerEntry[] = [
   {
-    id: "utd-sa",
+    id: "brand-identity",
     isCurrent: true,
-    dateLabel: "Present",
-    role: "Student Assistant",
-    organization: "University of Texas at Dallas",
+    dateLabel: "2018 — Günümüz",
+    role: "Kurumsal Kimlik & Marka Yönetimi",
+    organization: "1000+ Başarılı Referans",
     summary:
-      "Accessibility support and front-desk operations at UT Dallas's AccessAbility Resource Center.",
+      "Yayıncılardan global şirketlere kadar geniş bir yelpazede marka kimliği ve dijital deneyim tasarımı.",
     bullets: [
-      "Scribe and read notes for visually challenged students, translating code, mathematical equations, and technical concepts into accessible formats",
-      "Built a Python script with AI to convert handwritten mathematical notes into JAWS-compatible formats (.docx, .html)",
-      "Manage exam proctoring to maintain a fair and accessible testing environment for students with disabilities",
-      "Handle front-desk operations, student and faculty inquiries, and administrative support",
+      "Yayıncılardan global şirketlere kadar geniş bir yelpazede logo, sosyal medya ve dijital marka kimliği tasarımları.",
+      "Oyun sunucuları ve dijital topluluklar için özel arayüz ve görsel deneyim inşası.",
     ],
   },
   {
-    id: "hydracoral",
-    isCurrent: false,
-    dateLabel: "Jan 2023 \u2013 Dec 2023",
-    role: "Software Engineer Intern",
-    organization: "Hydracoral Technologies",
+    id: "web-development",
+    isCurrent: true,
+    dateLabel: "2020 — Günümüz",
+    role: "Tam Zamanlı Web & Uygulama Geliştirme",
+    organization: "Freelance & Sözleşmeli Projeler",
     summary:
-      "Full-stack development across Flutter mobile and Django web for a pre-launch product in a 3-person Agile team.",
+      "Estetik odaklı modern web uygulamaları ve yapay zeka destekli otonom sistemler.",
     bullets: [
-      "Developed a Flutter/Dart onboarding flow with facial-recognition APIs, cutting user verification time by 30% in staging",
-      "Diagnosed and resolved 15+ bugs in state management, API error handling, and memory leaks using Firebase Crashlytics -- reducing crash rate by 20% pre-launch",
-      "Designed responsive cross-platform UI components validated through structured user testing, improving usability scores by 20%",
-      "Owned CI/CD pipelines, integrating REST APIs for JWT authentication, data sync, and release automation",
+      "Kullanıcı deneyimini (UX) merkeze alan, estetik odaklı modern web sitelerinin ve şirketlere özel yönetim panellerinin geliştirilmesi.",
+      "İş süreçlerini hızlandıran, yapay zeka destekli otonom sistemler ve veri işleme mimarilerinin kurulumu.",
     ],
   },
 ];

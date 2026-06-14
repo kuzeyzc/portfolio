@@ -8,7 +8,7 @@ interface LoadingScreenProps {
   onComplete: () => void;
 }
 
-const TEXT = "RAJ DESAI";
+const TEXT = "NORTH BOUND";
 const CHAR_STAGGER = 0.25;
 const HOLD_MS = 500;
 const EXIT_DURATION = 0.8;
