@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "@/lib/gsap";
 import { ScrambleText } from "@/components/ui/scramble-text";
+import { SITE_BRAND } from "@/lib/site-links";
 
 const NAV_LINKS = [
   { label: "HAKKIMDA", href: "#about", number: "01" },
@@ -184,11 +185,11 @@ export function Navigation() {
           <div ref={navBarRef} className="flex items-baseline justify-between">
             <a
               href="#hero"
-              className="font-body font-medium text-[1.0625rem] tracking-[0.05em] transition-opacity duration-300 hover:opacity-80 cursor-pointer uppercase"
+              className="font-body font-medium text-[0.8125rem] xl:text-[1.0625rem] tracking-[0.05em] transition-opacity duration-300 hover:opacity-80 cursor-pointer uppercase"
               style={{ color: "var(--text)" }}
               aria-label="Back to top"
             >
-              RD
+              {SITE_BRAND}
             </a>
 
             <div className="flex items-baseline gap-8 xl:gap-10" role="list">
@@ -246,11 +247,11 @@ export function Navigation() {
       >
         <a
           href="#hero"
-          className="font-body font-medium text-[0.9375rem] tracking-[0.05em] uppercase transition-opacity duration-300 hover:opacity-80 min-h-11 min-w-11 inline-flex items-center"
+          className="font-body font-medium text-[0.625rem] sm:text-[0.9375rem] tracking-[0.05em] uppercase transition-opacity duration-300 hover:opacity-80 min-h-11 inline-flex items-center"
           style={{ color: "var(--text)" }}
           aria-label="Back to top"
         >
-          RD
+          {SITE_BRAND}
         </a>
 
         <button

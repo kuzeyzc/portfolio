@@ -7,47 +7,48 @@ import { FloatingThemeToggle } from "@/components/ui/floating-theme-toggle";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { SITE_LINKS, SITE_NAME } from "@/lib/site-links";
 
 
 export const metadata: Metadata = {
-  title: "Raj Desai — Fullstack Software Engineer",
+  title: "NorthBound Studio",
   description:
-    "Product-minded fullstack engineer building things that are both useful and enjoyable to use. MS CS at UT Dallas, open to full-time roles July 2026.",
-  metadataBase: new URL("https://rajdesai.io"),
+    "2018'den bu yana estetiği mühendislikle harmanlayan NorthBound; markalar için kusursuz dijital deneyimler ve otonom sistemler inşa eder.",
+  metadataBase: new URL("https://northbound.studio"),
   keywords: [
-    "Raj Desai",
-    "software engineer",
-    "fullstack developer",
+    "NorthBound",
+    "full-stack developer",
+    "graphic designer",
     "portfolio",
     "React",
     "Next.js",
     "TypeScript",
-    "UT Dallas",
+    "Ankara",
   ],
-  authors: [{ name: "Raj Desai" }],
-  creator: "Raj Desai",
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
   openGraph: {
-    title: "Raj Desai — Fullstack Software Engineer",
+    title: "NorthBound Studio",
     description:
-      "Product-minded fullstack engineer building things that are both useful and enjoyable to use.",
-    url: "https://rajdesai.dev",
-    siteName: "Raj Desai",
-    locale: "en_US",
+      "Estetik vizyon ve yazılım zekasını birleştiren NorthBound; dijital deneyimler ve otonom sistemler geliştirir.",
+    url: "https://northbound.studio",
+    siteName: SITE_NAME,
+    locale: "tr_TR",
     type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Raj Desai — Fullstack Software Engineer",
+        alt: "NorthBound — Full-Stack Developer & Graphic Designer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Raj Desai — Fullstack Software Engineer",
+    title: "NorthBound — Full-Stack Developer & Graphic Designer",
     description:
-      "Product-minded fullstack engineer building things that are both useful and enjoyable to use.",
+      "Estetik vizyon ve yazılım zekasını birleştiren NorthBound; dijital deneyimler ve otonom sistemler geliştirir.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -72,7 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="Raj Desai" />
+        <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
         <link rel="manifest" href="/site.webmanifest" />
 
         {/* Critical font preloads */}
@@ -112,22 +113,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              name: "Raj Desai",
-              url: "https://rajdesai.io",
-              jobTitle: "Fullstack Software Engineer",
+              name: SITE_NAME,
+              url: "https://northbound.studio",
+              jobTitle: "Full-Stack Developer & Graphic Designer",
               description:
-                "Product-minded fullstack engineer building things that are both useful and enjoyable to use.",
+                "Estetik vizyon ve yazılım zekasını birleştiren NorthBound; dijital deneyimler ve otonom sistemler geliştirir.",
               alumniOf: [
                 {
                   "@type": "CollegeOrUniversity",
-                  name: "University of Texas at Dallas",
-                },
-                {
-                  "@type": "CollegeOrUniversity",
-                  name: "University of Mumbai",
+                  name: "Çankaya Üniversitesi",
                 },
               ],
-              sameAs: ["https://github.com/RajDesai-18", "https://linkedin.com/in/rajdesai18"],
+              sameAs: [SITE_LINKS.github, SITE_LINKS.linkedin, SITE_LINKS.behance, SITE_LINKS.instagram],
             }),
           }}
         />
