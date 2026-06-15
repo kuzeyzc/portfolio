@@ -45,6 +45,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
   const desktopContentRef = useRef<HTMLDivElement>(null);
   const mobileContentRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<HeroPhase>(skipReveal ? "ready" : "waiting");
+  const revealDoneRef = useRef(false);
 
   // ── Trigger reveal when LoadingScreen completes ──
   useEffect(() => {
@@ -57,12 +58,14 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
   useEffect(() => {
     if (phase !== "revealing" || !sectionRef.current) return;
 
+    revealDoneRef.current = false;
     const splits: InstanceType<typeof SplitText>[] = [];
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         onComplete: () => {
+          revealDoneRef.current = true;
           setPhase("ready");
           onReady?.();
         },
@@ -170,14 +173,16 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
     }, sectionRef);
 
     return () => {
-      ctx.revert();
-      splits.forEach((s) => s.revert());
+      if (!revealDoneRef.current) {
+        ctx.revert();
+        splits.forEach((s) => s.revert());
+      }
     };
   }, [phase, onReady]);
 
-  // ── Skip phase (returning visitor) ──
+  // ── Pin final visible state once reveal completes ──
   useEffect(() => {
-    if (phase !== "ready" || !skipReveal || !sectionRef.current) return;
+    if (phase !== "ready" || !sectionRef.current) return;
     const allFade = sectionRef.current.querySelectorAll("[data-hero-fade]");
     const allLines = sectionRef.current.querySelectorAll("[data-hero-line]");
     gsap.set(allFade, { opacity: 1, y: 0 });
@@ -200,7 +205,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
     if (scrollInd) gsap.set(scrollInd, { opacity: 1 });
     if (desktopContentRef.current) desktopContentRef.current.style.opacity = "1";
     if (mobileContentRef.current) mobileContentRef.current.style.opacity = "1";
-  }, [phase, skipReveal]);
+  }, [phase]);
 
   // ── Shared: Marquee content ──
   const marqueeItems = Array.from({ length: 4 }, () => t.hero.marquee).flat();
