@@ -4,9 +4,9 @@ export const EXPERIENCE_ENTRIES: CareerEntry[] = [
   {
     id: "brand-identity",
     isCurrent: true,
-    dateLabel: "2018 — Günümüz",
+    dateLabel: "2018'den Bu Yana",
     role: "Kurumsal Kimlik & Marka Yönetimi",
-    organization: "1000+ Başarılı Referans",
+    organization: "300+ Başarılı Referans",
     summary:
       "Yayıncılardan global şirketlere kadar geniş bir yelpazede marka kimliği ve dijital deneyim tasarımı.",
     bullets: [
@@ -17,7 +17,7 @@ export const EXPERIENCE_ENTRIES: CareerEntry[] = [
   {
     id: "web-development",
     isCurrent: true,
-    dateLabel: "2020 — Günümüz",
+    dateLabel: "2020'den Bu Yana",
     role: "Tam Zamanlı Web & Uygulama Geliştirme",
     organization: "Freelance & Sözleşmeli Projeler",
     summary:

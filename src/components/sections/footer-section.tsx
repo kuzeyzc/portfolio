@@ -5,8 +5,10 @@ import { gsap } from "@/lib/gsap";
 import { Container } from "@/components/layout/container";
 import { Magnetic } from "@/components/ui/magnetic";
 import { ArrowUp } from "lucide-react";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export function FooterSection() {
+  const { t } = useLanguage();
   const footerRef = useRef<HTMLElement>(null);
   const ghostRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
@@ -105,7 +107,7 @@ export function FooterSection() {
             className="font-mono text-[0.5625rem] sm:text-[0.625rem] xl:text-[0.6875rem] uppercase tracking-[0.1em] order-2 sm:order-1"
             style={{ color: "var(--text-muted)" }}
           >
-            All rights reserved &copy; {new Date().getFullYear()} North Bound
+            {t.footer.copyright} &copy; {new Date().getFullYear()} North Bound
           </p>
 
           {/* Center: Back to top */}
@@ -131,7 +133,7 @@ export function FooterSection() {
             className="font-mono text-[0.5625rem] sm:text-[0.625rem] xl:text-[0.6875rem] uppercase tracking-[0.1em] order-3"
             style={{ color: "var(--text-muted)" }}
           >
-            Designed &amp; built with <span style={{ color: "var(--accent-raw)" }}>&#10084;</span>{" "}
+            {t.footer.credit} <span style={{ color: "var(--accent-raw)" }}>&#10084;</span>{" "}
             by North Bound
           </p>
         </div>

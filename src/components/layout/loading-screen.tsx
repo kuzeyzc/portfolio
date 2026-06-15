@@ -8,10 +8,10 @@ interface LoadingScreenProps {
   onComplete: () => void;
 }
 
-const TEXT = "NORTH BOUND";
-const CHAR_STAGGER = 0.25;
-const HOLD_MS = 500;
-const EXIT_DURATION = 0.8;
+const TEXT = "northbound    studio.";
+const CHAR_STAGGER = 0.12;
+const HOLD_MS = 300;
+const EXIT_DURATION = 0.55;
 const CURSOR_BLINK_DURATION = 0.85;
 
 const containerVariants = {
@@ -101,7 +101,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
     >
       <div className="w-full max-w-[90vw]">
         <h1
-          className="hero-name-line font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.82] tracking-[-0.04em] whitespace-nowrap"
+          className="hero-name-line font-display font-bold text-balance normal-case text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.82] tracking-[-0.04em] whitespace-nowrap"
           style={{ color: "var(--text)" }}
           aria-label={TEXT}
         >

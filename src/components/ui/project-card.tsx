@@ -53,7 +53,7 @@ function ProjectLinks({ project }: { project: Project }) {
           }}
         >
           <ArrowUpRight size={14} />
-          Live Demo
+          Canlı Demo
         </a>
       )}
       <a
@@ -91,7 +91,7 @@ function WhyBuiltIt({ text }: { text: string }) {
           className="transition-transform duration-300"
           style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
         />
-        Why I built it
+        Neden yaptım
       </button>
       <div className="project-why-expand" data-expanded={expanded ? "true" : "false"}>
         <div>
@@ -154,7 +154,7 @@ function DesktopThumbnail({ project, imageHovered }: { project: Project; imageHo
           className="font-mono text-[0.6875rem] uppercase tracking-[0.2em]"
           style={{ color: "var(--text-muted)", opacity: 0.4 }}
         >
-          Coming Soon
+          Yakında
         </span>
       </div>
     </div>

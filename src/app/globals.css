@@ -369,15 +369,21 @@
   will-change: transform, opacity, filter;
 }
 
+.hero-name-with-dot {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.04em, 0.5vw, 0.1em);
+}
+
 .hero-accent-dot {
   display: inline-block;
-  width: clamp(12px, 1.8vw, 24px);
-  height: clamp(12px, 1.8vw, 24px);
+  width: clamp(18px, 3vw, 48px);
+  height: clamp(18px, 3vw, 48px);
   border-radius: 50%;
   background-color: var(--primary);
-  margin-left: 0.28em;
-  vertical-align: middle;
   flex-shrink: 0;
+  align-self: center;
+  translate: 0 -0.04em;
 }
 
 .hero-marquee-track {

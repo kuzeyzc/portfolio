@@ -21,11 +21,11 @@ export const PROJECTS: Project[] = [
     id: "yoru",
     number: "01",
     name: "YORU",
-    oneLiner: "A full-screen ambient station where you don't press play -- you step inside.",
+    oneLiner: "Play'e basmadığınız, içine adım attığınız tam ekran bir ambient istasyonu.",
     detailedDescription:
-      "Yoru is a full-screen listening environment built around 21 anime-style scenes and 13 layered soundscapes. Scenes and sounds are mapped together -- switching audio automatically transitions the visuals to match. The UI fades away after a few seconds of inactivity so there's nothing between you and the atmosphere. Every transition crossfades, every interaction has keyboard support, and the whole experience is designed to make you forget you're in a browser.",
+      "Yoru, 21 anime tarzı sahne ve 13 katmanlı ses manzarası etrafında kurulu tam ekran bir dinleme ortamı. Sahne ve sesler eşleştirilmiş — ses değiştirdiğinizde görseller otomatik olarak uyum sağlıyor. Birkaç saniyelik hareketsizlikten sonra arayüz kayboluyor; siz ile atmosfer arasında hiçbir engel kalmıyor. Her geçiş crossfade, her etkileşim klavye destekli; tüm deneyim tarayıcıda olduğunuzu unutturmak için tasarlandı.",
     whyIBuiltIt:
-      "I wanted to build something where the goal wasn't productivity or metrics -- just a feeling. Most music sites are built around playlists and controls. I wanted to see what happens when you strip all of that away and design around atmosphere instead.",
+      "Verimlilik veya metrik hedefi olmayan, yalnızca bir his veren bir şey inşa etmek istedim. Çoğu müzik sitesi çalma listeleri ve kontroller etrafında kurulu. Hepsini çıkarıp atmosfer etrafında tasarlarsak ne olur diye merak ettim.",
     pills: [
       "Next.js",
       "React",
@@ -38,7 +38,7 @@ export const PROJECTS: Project[] = [
     ],
     image: {
       src: "/images/yoru-project.png",
-      alt: "Yoru — cinematic ambient web experience",
+      alt: "Yoru — sinematik ambient web deneyimi",
     },
     links: {
       live: "https://yoru-sandy.vercel.app",
@@ -49,11 +49,11 @@ export const PROJECTS: Project[] = [
     id: "pr-sensei",
     number: "02",
     name: "PR SENSEI",
-    oneLiner: "AI-powered code reviews that land on your PR in under 30 seconds.",
+    oneLiner: "30 saniyeden kısa sürede PR'ınıza ulaşan yapay zeka destekli kod incelemeleri.",
     detailedDescription:
-      "PR Sensei hooks into GitHub's webhook system to intercept pull requests, queues them through an async Redis and BullMQ pipeline, and generates structured code reviews using OpenAI and Gemini APIs -- all in under 30 seconds. It posts a summary comment and up to 5 inline comments on the exact changed lines. Reviews are deduplicated so the same line never gets flagged twice, and the whole system is idempotent per commit SHA. A Next.js dashboard tracks review metrics, file hotspots, and history across repos, backed by a multi-tenant PostgreSQL schema.",
+      "PR Sensei, GitHub webhook sistemine bağlanarak pull request'leri yakalar, async Redis ve BullMQ hattı üzerinden kuyruğa alır ve OpenAI ile Gemini API'leri kullanarak yapılandırılmış kod incelemeleri üretir — hepsi 30 saniyenin altında. Özet yorum ve değişen satırlara en fazla 5 satır içi yorum bırakır. İncelemeler tekilleştirilir; aynı satır iki kez işaretlenmez ve sistem commit SHA başına idempotent çalışır. Next.js paneli, çok kiracılı PostgreSQL şemasıyla desteklenen depo bazlı inceleme metriklerini, dosya hotspot'larını ve geçmişi takip eder.",
     whyIBuiltIt:
-      "Code reviews are a bottleneck on every team I've been on. Someone opens a PR, and it sits there for hours waiting for a human to look at it. I wanted to build something that gives developers fast, structured feedback the moment they push -- not to replace human review, but to catch the obvious stuff so the real conversation can focus on architecture and design.",
+      "Kod incelemeleri içinde bulunduğum her ekipte darboğazdı. Biri PR açar, mimari ve tasarım konuşmasına geçmeden önce bariz hataları yakalayacak hızlı ve yapılandırılmış geri bildirim veren bir şey istedim — insan incelemesinin yerini almak için değil.",
     pills: [
       "Next.js",
       "TypeScript",
@@ -75,11 +75,11 @@ export const PROJECTS: Project[] = [
     id: "llm-cookbook",
     number: "03",
     name: "LLM COOKBOOK",
-    oneLiner: "Type in what's in your fridge, get back recipes that actually make sense.",
+    oneLiner: "Buzdolabındakileri yazın, gerçekten mantıklı tarifler alın.",
     detailedDescription:
-      'LLM Cookbook matches natural-language queries to recipes using FAISS vector search and MiniLM embeddings -- so searching "something warm and spicy" returns results by meaning, not keywords. If nothing matches well enough, it falls back to a local LLM to generate a recipe from scratch. The system handles dietary filters, allergen exclusions, and ingredient substitution. A Pandas pipeline processes 10,000+ raw recipe records into model-ready embeddings in a single reproducible script, served through a FastAPI backend.',
+      'LLM Cookbook, doğal dil sorgularını FAISS vektör araması ve MiniLM embedding\'leriyle tariflere eşleştirir — "sıcak ve baharatlı bir şey" aradığınızda anahtar kelime değil anlam üzerinden sonuç döner. Yeterince iyi eşleşme yoksa yerel LLM ile sıfırdan tarif üretir. Diyet filtreleri, alerjen dışlamaları ve malzeme ikamesini destekler. Pandas hattı 10.000+ ham tarif kaydını tek tekrarlanabilir script ile modele hazır embedding\'lere dönüştürür; FastAPI backend üzerinden sunulur.',
     whyIBuiltIt:
-      "I wanted to see how far I could push semantic search before needing a full LLM. Recipes were the perfect domain -- structured enough to test retrieval quality, messy enough to need real NLP. It started as a class project and turned into a deep dive into embeddings, vector search, and knowing when to let the model generate vs when retrieval is enough.",
+      "Tam bir LLM'e ihtiyaç duymadan semantik aramayı ne kadar ilerletebileceğimi görmek istedim. Tarifler ideal bir alan — geri getirme kalitesini test etmek için yeterince yapılandırılmış, gerçek NLP gerektirecek kadar karmaşık. Ders projesi olarak başladı; embedding, vektör arama ve ne zaman üretim ne zaman retrieval yeterli sorusuna derinlemesine daldım.",
     pills: [
       "Python",
       "FastAPI",
@@ -100,11 +100,11 @@ export const PROJECTS: Project[] = [
     number: "04",
     name: "FINANCIAL SAAS",
     oneLiner:
-      "A personal finance dashboard that connects to real bank accounts and makes your money make sense.",
+      "Gerçek banka hesaplarına bağlanan ve paranızı anlaşılır kılan kişisel finans paneli.",
     detailedDescription:
-      "Horizon connects to multiple bank accounts through Plaid, pulls in real transaction data, and unifies everything into a single dashboard -- balances, spending breakdowns, transaction history, and fund transfers via Dwolla. Auth is handled server-side with Appwrite, and the UI updates in real time as accounts are linked or transactions come in. The focus was on building a complete product: proper loading states, responsive tables, form validation with Zod, and a cohesive design system -- not just a feature demo.",
+      "Horizon, Plaid üzerinden birden fazla banka hesabına bağlanır, gerçek işlem verilerini çeker ve bakiyeler, harcama dağılımları, işlem geçmişi ve Dwolla ile fon transferlerini tek panelde birleştirir. Kimlik doğrulama Appwrite ile sunucu tarafında yönetilir; hesaplar bağlandıkça veya işlemler geldikçe arayüz gerçek zamanlı güncellenir. Odak, yalnızca bir özellik demosu değil; doğru yükleme durumları, duyarlı tablolar, Zod ile form doğrulama ve tutarlı bir tasarım sistemi olan tam bir ürün inşa etmekti.",
     whyIBuiltIt:
-      "I wanted to build something that feels like a real product, not just a feature. Most portfolio projects stop at the UI -- I wanted to go further and deal with real bank APIs, real auth flows, real-time data, and the messy details that make an app actually work end to end.",
+      "Yalnızca bir özellik değil, gerçek bir ürün gibi hissettiren bir şey inşa etmek istedim. Çoğu portfolyo projesi arayüzde kalır — gerçek banka API'leri, gerçek auth akışları, gerçek zamanlı veri ve uçtan uca çalışan bir uygulamayı mümkün kılan dağınık detaylarla uğraşmak istedim.",
     pills: [
       "Next.js",
       "TypeScript",

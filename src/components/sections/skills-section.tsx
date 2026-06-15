@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { Container } from "@/components/layout/container";
-import { SKILLS } from "@/lib/skills-data";
+import { useLanguage } from "@/components/providers/language-provider";
+import type { LocalizedSkill } from "@/lib/i18n/types";
 
 const SKILL_BADGE_CLASS =
   "inline-flex items-center px-5 py-2.5 rounded-full border border-black/10 bg-black/5 text-sm font-medium text-black/80 transition-all duration-300 ease-out cursor-default hover:-translate-y-1 hover:bg-primary hover:text-primary-foreground hover:border-primary hover:shadow-[0_8px_16px_-6px_rgba(37,99,235,0.4)]";
@@ -28,7 +29,7 @@ function SkillBadges({ pills }: { pills: string[] }) {
    SKILL CELL — category name + skill badges
    ────────────────────────────────────────────────────────── */
 
-function SkillCell({ skill }: { skill: (typeof SKILLS)[number] }) {
+function SkillCell({ skill }: { skill: LocalizedSkill }) {
   return (
     <div
       className="skill-cell"
@@ -52,15 +53,15 @@ function SkillCell({ skill }: { skill: (typeof SKILLS)[number] }) {
    SOLO CELL — full-width row (name left, badges right)
    ────────────────────────────────────────────────────────── */
 
-function SoloCell({ skill }: { skill: (typeof SKILLS)[number] }) {
+function SoloCell({ skill }: { skill: LocalizedSkill }) {
   return (
     <div
       className="skill-cell"
       style={{ padding: "clamp(24px, 2.5vw, 36px) clamp(20px, 2vw, 32px)" }}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(220px,0.9fr)_1.4fr] gap-8 lg:gap-14 xl:gap-16 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(220px,0.9fr)_1.4fr] gap-8 lg:gap-14 xl:gap-16 items-center">
         <h3
-          className="font-display font-bold text-balance text-4xl md:text-6xl tracking-[-0.03em] lg:pt-1"
+          className="font-display font-bold text-balance text-4xl md:text-6xl tracking-[-0.03em]"
           style={{
             color: "var(--text)",
           }}
@@ -79,6 +80,7 @@ function SoloCell({ skill }: { skill: (typeof SKILLS)[number] }) {
    ────────────────────────────────────────────────────────── */
 
 export function SkillsSection() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -122,9 +124,9 @@ export function SkillsSection() {
     };
   }, []);
 
-  const row1 = [SKILLS[0], SKILLS[1]];
-  const row2 = [SKILLS[2], SKILLS[3]];
-  const solo = SKILLS[4];
+  const row1 = [t.skills[0], t.skills[1]];
+  const row2 = [t.skills[2], t.skills[3]];
+  const solo = t.skills[4];
 
   return (
     <section ref={sectionRef} id="skills" className="relative w-full overflow-hidden">

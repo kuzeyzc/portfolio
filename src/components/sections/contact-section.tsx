@@ -6,18 +6,24 @@ import { Container } from "@/components/layout/container";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { CONTACT_LINKS } from "@/lib/contact-data";
 import { SITE_LINKS } from "@/lib/site-links";
-import { ArrowRight, Send, CheckCircle2, AlertCircle } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CheckCircle2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/components/providers/language-provider";
 
 // ─── EmailJS Config ───
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
 const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 
+const contactFormFieldClass =
+  "h-auto w-full bg-black/5 border border-black/5 rounded-2xl px-6 py-4 text-base md:text-lg text-black placeholder:text-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:bg-white focus-visible:border-transparent transition-all duration-300 shadow-none";
+
+const contactFormLabelClass = "block text-sm font-medium text-black/80 mb-2 ml-2";
+
 export function ContactSection() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLParagraphElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -44,7 +50,7 @@ export function ContactSection() {
       e.preventDefault();
 
       if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
-        toast.error("Please fill in all fields.", {
+        toast.error(t.contact.toast.fillAll, {
           icon: <AlertCircle size={18} />,
         });
         return;
@@ -52,7 +58,7 @@ export function ContactSection() {
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formState.email)) {
-        toast.error("Please enter a valid email address.", {
+        toast.error(t.contact.toast.invalidEmail, {
           icon: <AlertCircle size={18} />,
         });
         return;
@@ -74,13 +80,13 @@ export function ContactSection() {
           EMAILJS_PUBLIC_KEY
         );
 
-        toast.success("Message sent. I'll get back to you soon.", {
+        toast.success(t.contact.toast.success, {
           icon: <CheckCircle2 size={18} />,
         });
 
         setFormState({ name: "", email: "", message: "" });
       } catch {
-        toast.error("Something went wrong. Try emailing me directly.", {
+        toast.error(t.contact.toast.error, {
           icon: <AlertCircle size={18} />,
           description: SITE_LINKS.email.replace("mailto:", ""),
         });
@@ -88,7 +94,7 @@ export function ContactSection() {
         setSending(false);
       }
     },
-    [formState]
+    [formState, t.contact.toast]
   );
 
   // ── GSAP Scroll Animations ──
@@ -206,75 +212,71 @@ export function ContactSection() {
             color: "var(--text)",
           }}
         >
-          Hayalinizdeki her fikri kusursuz bir tasarıma, karmaşık ihtiyaçlarınızı ise akıllı
-          yazılımlara dönüştürelim. İletişime geçin.
+          {t.contact.heading}
         </p>
 
         {/* Contact Form */}
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="mt-8 sm:mt-12"
+          className="mt-8 sm:mt-12 flex flex-col gap-6"
           style={{ opacity: 0 }}
           noValidate
         >
-          {/* Name + Email row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-4 sm:mb-5">
-            <div className="space-y-2 sm:space-y-2.5">
-              <Label htmlFor="contact-name">Name</Label>
-              <Input
-                id="contact-name"
-                name="name"
-                placeholder="Your name"
-                value={formState.name}
-                onChange={handleChange}
-                className="contact-field"
-                autoComplete="name"
-              />
-            </div>
-            <div className="space-y-2 sm:space-y-2.5">
-              <Label htmlFor="contact-email">Email</Label>
-              <Input
-                id="contact-email"
-                name="email"
-                type="email"
-                placeholder="you@email.com"
-                value={formState.email}
-                onChange={handleChange}
-                className="contact-field"
-                autoComplete="email"
-              />
-            </div>
-          </div>
-
-          {/* Message */}
-          <div className="space-y-2 sm:space-y-2.5 mb-6 sm:mb-8">
-            <Label htmlFor="contact-message">Message</Label>
-            <Textarea
-              id="contact-message"
-              name="message"
-              placeholder="What's on your mind?"
-              value={formState.message}
+          <div>
+            <Label htmlFor="contact-name" className={contactFormLabelClass}>
+              {t.contact.nameLabel}
+            </Label>
+            <Input
+              id="contact-name"
+              name="name"
+              placeholder={t.contact.namePlaceholder}
+              value={formState.name}
               onChange={handleChange}
-              className="contact-field"
+              className={contactFormFieldClass}
+              autoComplete="name"
             />
           </div>
 
-          {/* Submit — full width on mobile */}
-          <Button
+          <div>
+            <Label htmlFor="contact-email" className={contactFormLabelClass}>
+              {t.contact.emailLabel}
+            </Label>
+            <Input
+              id="contact-email"
+              name="email"
+              type="email"
+              placeholder={t.contact.emailPlaceholder}
+              value={formState.email}
+              onChange={handleChange}
+              className={contactFormFieldClass}
+              autoComplete="email"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="contact-message" className={contactFormLabelClass}>
+              {t.contact.messageLabel}
+            </Label>
+            <Textarea
+              id="contact-message"
+              name="message"
+              placeholder={t.contact.messagePlaceholder}
+              value={formState.message}
+              onChange={handleChange}
+              className={`${contactFormFieldClass} min-h-[160px] resize-none`}
+            />
+          </div>
+
+          <button
             type="submit"
             disabled={sending}
-            className="contact-submit w-full sm:w-auto min-h-11 h-12 px-8 rounded-lg font-body font-medium text-[0.875rem] sm:text-[0.9375rem] transition-all duration-300 disabled:opacity-50"
-            style={{
-              backgroundColor: "var(--accent-raw)",
-              color: "var(--primary-foreground)",
-              border: "none",
-            }}
+            className="w-full h-16 mt-2 rounded-full bg-black text-white text-lg font-medium hover:bg-blue-600 hover:-translate-y-1 hover:shadow-[0_10px_20px_-10px_rgba(37,99,235,0.6)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none disabled:hover:translate-y-0 disabled:hover:bg-black disabled:hover:shadow-none"
             data-cursor-hover
           >
-            <Send size={16} className="mr-2" />
-            {sending ? "Sending..." : "Send Message"}
-          </Button>
+            {sending ? t.contact.submitting : t.contact.submit}
+            {!sending && <ArrowUpRight size={20} strokeWidth={2} aria-hidden />}
+          </button>
         </form>
 
         {/* Accent Divider */}
@@ -297,7 +299,7 @@ export function ContactSection() {
               rel={link.external ? "noopener noreferrer" : undefined}
               className="contact-strip group"
               data-cursor-hover
-              aria-label={`Visit ${link.name}`}
+              aria-label={`${link.name} ${t.contact.visitLink}`}
             >
               {/* Left: Number + Name + Icon */}
               <div className="flex items-center gap-3 sm:gap-5">

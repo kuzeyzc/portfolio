@@ -8,6 +8,7 @@ import { Magnetic } from "@/components/ui/magnetic";
 import { LiveClock } from "@/components/ui/live-clock";
 import { Github, Linkedin } from "lucide-react";
 import { SITE_LINKS } from "@/lib/site-links";
+import { useLanguage } from "@/components/providers/language-provider";
 
 const HERO_CHAR_FROM = {
   opacity: 0,
@@ -37,18 +38,9 @@ interface HeroSectionProps {
   onReady?: () => void;
 }
 
-const MARQUEE_ITEMS = [
-  "TASARIM",
-  "FRONT-END",
-  "BACK-END",
-  "YAPAY ZEKA",
-  "OTONOM SİSTEMLER",
-  "KURUMSAL KİMLİK",
-  "UI/UX",
-  "SOSYAL MEDYA",
-];
 
 export function HeroSection({ revealed = false, skipReveal = false, onReady }: HeroSectionProps) {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const desktopContentRef = useRef<HTMLDivElement>(null);
   const mobileContentRef = useRef<HTMLDivElement>(null);
@@ -127,13 +119,23 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
         );
       }
 
-      // Fade in marquee between RAJ and DESAI
+      // Fade in marquee between NORTH and BOUND
       if (index === 0 && marqueeEl.length > 0) {
         tl.fromTo(
           marqueeEl,
           { opacity: 0 },
           { opacity: 1, duration: 0.5, ease: "power3.out" },
           "-=0.4"
+        );
+      }
+
+      // Subtitle — sync with NORTH/BOUND reveal (not after dot)
+      if (index === 0 && infoBar.length > 0) {
+        tl.fromTo(
+          infoBar,
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+          "-=0.3"
         );
       }
 
@@ -153,14 +155,6 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
         );
       }
     });
-
-    // Subtitle fade in
-    tl.fromTo(
-      infoBar,
-      { opacity: 0, y: 10 },
-      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
-      "-=0.4"
-    );
 
     // Scroll indicator
     if (scrollInd) {
@@ -206,20 +200,20 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
   }, [phase, skipReveal]);
 
   // ── Shared: Marquee content ──
-  const marqueeItems = Array.from({ length: 4 }, () => MARQUEE_ITEMS).flat();
+  const marqueeItems = Array.from({ length: 4 }, () => t.hero.marquee).flat();
 
   const renderMarqueeStrip = (copyIndex: number) => (
     <div key={copyIndex} className="flex items-center shrink-0" aria-hidden={copyIndex === 1}>
       {marqueeItems.map((item, i) => (
         <Fragment key={`${copyIndex}-${i}`}>
           <span
-            className="font-mono text-[0.825rem] lg:text-[0.825rem] uppercase tracking-[0.18em] whitespace-nowrap px-3 lg:px-4"
+            className="font-mono text-[0.9375rem] lg:text-[1rem] uppercase tracking-[0.18em] whitespace-nowrap px-3 lg:px-5"
             style={{ color: "var(--text)" }}
           >
             {item}
           </span>
           <span
-            className="text-[0.825rem] lg:text-[0.9625rem] px-1 lg:px-2"
+            className="text-[0.9375rem] lg:text-[1.0625rem] px-1.5 lg:px-2.5"
             style={{ color: "var(--accent-raw)", opacity: 0.5 }}
           >
             ✦
@@ -275,7 +269,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               className="font-mono text-[0.6875rem] xl:text-[0.75rem] uppercase tracking-[0.12em]"
               style={{ color: "var(--text-muted)" }}
             >
-              FULL-STACK DEVELOPER &amp; GRAPHIC DESIGNER
+              {t.hero.role}
             </span>
             <LiveClock />
           </div>
@@ -304,7 +298,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
           {/* ── Marquee Strip ── */}
           <div
             data-hero-marquee
-            className="w-full overflow-hidden opacity-0 border-y my-0"
+            className="w-full overflow-hidden opacity-0 border-y my-0 py-3.5 lg:py-4"
             style={{
               borderColor: "var(--border-custom)",
               backgroundColor: "var(--bg)",
@@ -316,10 +310,10 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
             </div>
           </div>
 
-          {/* DESAI — right-aligned */}
+          {/* BOUND — right-aligned */}
           <h1
             data-hero-name
-            className="hero-name-line font-display font-bold text-balance leading-[0.82] tracking-[-0.04em] whitespace-nowrap text-right text-[clamp(3rem,18vw,26rem)]"
+            className="hero-name-line hero-name-with-dot font-display font-bold text-balance leading-[0.82] tracking-[-0.04em] whitespace-nowrap text-right justify-end text-[clamp(3rem,18vw,26rem)]"
             style={{
               color: "var(--text)",
             }}
@@ -328,14 +322,13 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
             <span className="hero-accent-dot" data-hero-dot aria-hidden="true" />
           </h1>
 
-          {/* Subtitle — right-aligned under DESAI */}
+          {/* Subtitle — right-aligned under BOUND */}
           <p
             data-hero-info
-            className="font-body text-[1rem] xl:text-[1.2625rem] text-right mt-3 opacity-0"
+            className="font-body text-[1.125rem] xl:text-[1.4375rem] text-right mt-3 opacity-0"
             style={{ color: "var(--text)" }}
           >
-            2018&apos;den bu yana estetiği mühendislikle harmanlıyor; markalar için kusursuz
-            dijital deneyimler ve otonom sistemler inşa ediyorum.
+            {t.hero.subtitle}
           </p>
         </div>
 
@@ -361,7 +354,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               className="font-mono text-[0.6875rem] xl:text-[0.75rem] uppercase tracking-[0.1em] opacity-0"
               style={{ color: "var(--accent-raw)" }}
             >
-              YENİ PROJELERE AÇIK
+              {t.hero.openToProjects}
             </span>
           </div>
         </div>
@@ -423,7 +416,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
           {/* Marquee Strip */}
           <div
             data-hero-marquee
-            className="w-full overflow-hidden opacity-0 border-y my-0"
+            className="w-full overflow-hidden opacity-0 border-y my-0 py-3 lg:py-3.5"
             style={{
               borderColor: "var(--border-custom)",
               backgroundColor: "var(--bg)",
@@ -435,10 +428,10 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
             </div>
           </div>
 
-          {/* DESAI — left-aligned on mobile */}
+          {/* BOUND — left-aligned on mobile */}
           <h1
             data-hero-name
-            className="hero-name-line font-display font-bold text-balance leading-[0.82] tracking-[-0.04em] whitespace-nowrap text-[clamp(2.75rem,22vw,8rem)]"
+            className="hero-name-line hero-name-with-dot font-display font-bold text-balance leading-[0.82] tracking-[-0.04em] whitespace-nowrap text-[clamp(2.75rem,22vw,8rem)]"
             style={{
               color: "var(--text)",
             }}
@@ -450,11 +443,10 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
           {/* Subtitle */}
           <p
             data-hero-info
-            className="font-body text-[0.9375rem] sm:text-[1rem] leading-[1.4] mt-3 opacity-0"
+            className="font-body text-[1.0625rem] sm:text-[1.125rem] leading-[1.4] mt-3 opacity-0"
             style={{ color: "var(--text-muted)" }}
           >
-            2018&apos;den bu yana estetiği mühendislikle harmanlıyor; markalar için kusursuz
-            dijital deneyimler ve otonom sistemler inşa ediyorum.
+            {t.hero.subtitle}
           </p>
         </div>
 
@@ -470,13 +462,13 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
               className="font-mono text-[0.5625rem] sm:text-[0.625rem] uppercase tracking-[0.1em]"
               style={{ color: "var(--text-muted)" }}
             >
-              FULL-STACK DEVELOPER &amp; GRAPHIC DESIGNER
+              {t.hero.role}
             </span>
             <span
               className="font-mono text-[0.5rem] sm:text-[0.5625rem] uppercase tracking-[0.1em]"
               style={{ color: "var(--accent-raw)" }}
             >
-              YENİ PROJELERE AÇIK
+              {t.hero.openToProjects}
             </span>
           </div>
         </div>

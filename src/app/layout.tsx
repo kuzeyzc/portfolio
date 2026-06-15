@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { LanguageProvider } from "@/components/providers/language-provider";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 import { MeshGradient } from "@/components/background/mesh-gradient";
 import { FloatingThemeToggle } from "@/components/ui/floating-theme-toggle";
@@ -131,6 +132,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="font-body antialiased">
         <ThemeProvider>
+          <LanguageProvider>
           <SmoothScrollProvider>
             {/* Skip-to-content — visible only on keyboard focus */}
             <a href="#main-content" className="skip-to-content">
@@ -143,6 +145,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </main>
             <Toaster />
           </SmoothScrollProvider>
+          </LanguageProvider>
         </ThemeProvider>
         <SpeedInsights />
         <Analytics />

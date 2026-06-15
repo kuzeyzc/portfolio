@@ -1,17 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { gsap } from "@/lib/gsap";
 import { ScrambleText } from "@/components/ui/scramble-text";
-import { SITE_BRAND } from "@/lib/site-links";
-
-const NAV_LINKS = [
-  { label: "HAKKIMDA", href: "#about", number: "01" },
-  { label: "PROJELER", href: "#work", number: "02" },
-  { label: "İLETİŞİM", href: "#contact", number: "03" },
-] as const;
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export function Navigation() {
+  const { t } = useLanguage();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navWrapRef = useRef<HTMLDivElement>(null);
   const navBarRef = useRef<HTMLDivElement>(null);
@@ -20,6 +16,16 @@ export function Navigation() {
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
+
+  const navLinks = useMemo(
+    () =>
+      [
+        { label: t.nav.about, href: "#about", number: "01" },
+        { label: t.nav.work, href: "#work", number: "02" },
+        { label: t.nav.contact, href: "#contact", number: "03" },
+      ] as const,
+    [t.nav.about, t.nav.work, t.nav.contact]
+  );
 
   /* ── GSAP Scrub: continuous morph from full-width → compact centered ── */
   useEffect(() => {
@@ -54,8 +60,8 @@ export function Navigation() {
           paddingTop: "32px",
         },
         {
-          paddingLeft: "calc(50vw - 270px)",
-          paddingRight: "calc(50vw - 270px)",
+          paddingLeft: "calc(50vw - 360px)",
+          paddingRight: "calc(50vw - 360px)",
           paddingTop: "16px",
           duration: 1,
           ease: "none",
@@ -189,13 +195,13 @@ export function Navigation() {
               style={{ color: "var(--text)" }}
               aria-label="Back to top"
             >
-              {SITE_BRAND}
+              NORTH BOUND
             </a>
 
             <div className="flex items-baseline gap-8 xl:gap-10" role="list">
-              {NAV_LINKS.map((link) => (
+              {navLinks.map((link) => (
                 <a
-                  key={link.label}
+                  key={link.href}
                   href={link.href}
                   data-cursor-hide
                   role="listitem"
@@ -221,6 +227,9 @@ export function Navigation() {
                   </span>
                 </a>
               ))}
+              <div role="listitem" className="flex items-baseline">
+                <LanguageSwitcher />
+              </div>
             </div>
           </div>
 
@@ -251,52 +260,56 @@ export function Navigation() {
           style={{ color: "var(--text)" }}
           aria-label="Back to top"
         >
-          {SITE_BRAND}
+          <span className="hidden min-[380px]:inline">NORTH BOUND</span>
+          <span className="min-[380px]:hidden">NB</span>
         </a>
 
-        <button
-          ref={hamburgerRef}
-          className="mobile-hamburger flex items-center justify-center gap-2 min-h-11 min-w-11 px-3 rounded-full transition-colors duration-300"
-          style={{
-            backgroundColor: drawerOpen ? "transparent" : "var(--surface)",
-            border: drawerOpen ? "none" : "1px solid var(--border-custom)",
-            backdropFilter: drawerOpen ? "none" : "blur(12px)",
-            WebkitBackdropFilter: drawerOpen ? "none" : "blur(12px)",
-            color: "var(--text)",
-          }}
-          onClick={() => setDrawerOpen((prev) => !prev)}
-          aria-label={drawerOpen ? "Close menu" : "Open menu"}
-          aria-expanded={drawerOpen}
-          aria-controls="mobile-nav-drawer"
-        >
-          <span className="font-mono text-[0.625rem] uppercase tracking-[0.14em]">
-            {drawerOpen ? "Close" : "Menu"}
-          </span>
-          <div className="relative w-4 h-3 flex flex-col justify-between" aria-hidden="true">
-            <span
-              className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
-              style={{
-                backgroundColor: "var(--text)",
-                transform: drawerOpen ? "translateY(4px) rotate(45deg)" : "none",
-              }}
-            />
-            <span
-              className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
-              style={{
-                backgroundColor: "var(--text)",
-                opacity: drawerOpen ? 0 : 1,
-                transform: drawerOpen ? "scaleX(0)" : "scaleX(1)",
-              }}
-            />
-            <span
-              className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
-              style={{
-                backgroundColor: "var(--text)",
-                transform: drawerOpen ? "translateY(-6px) rotate(-45deg)" : "none",
-              }}
-            />
-          </div>
-        </button>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher variant="nav" className="text-[0.625rem] sm:text-[0.8125rem]" />
+          <button
+            ref={hamburgerRef}
+            className="mobile-hamburger flex items-center justify-center gap-2 min-h-11 min-w-11 px-3 rounded-full transition-colors duration-300"
+            style={{
+              backgroundColor: drawerOpen ? "transparent" : "var(--surface)",
+              border: drawerOpen ? "none" : "1px solid var(--border-custom)",
+              backdropFilter: drawerOpen ? "none" : "blur(12px)",
+              WebkitBackdropFilter: drawerOpen ? "none" : "blur(12px)",
+              color: "var(--text)",
+            }}
+            onClick={() => setDrawerOpen((prev) => !prev)}
+            aria-label={drawerOpen ? "Close menu" : "Open menu"}
+            aria-expanded={drawerOpen}
+            aria-controls="mobile-nav-drawer"
+          >
+            <span className="font-mono text-[0.625rem] uppercase tracking-[0.14em]">
+              {drawerOpen ? t.nav.close : t.nav.menu}
+            </span>
+            <div className="relative w-4 h-3 flex flex-col justify-between" aria-hidden="true">
+              <span
+                className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
+                style={{
+                  backgroundColor: "var(--text)",
+                  transform: drawerOpen ? "translateY(4px) rotate(45deg)" : "none",
+                }}
+              />
+              <span
+                className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
+                style={{
+                  backgroundColor: "var(--text)",
+                  opacity: drawerOpen ? 0 : 1,
+                  transform: drawerOpen ? "scaleX(0)" : "scaleX(1)",
+                }}
+              />
+              <span
+                className="block w-full h-[1.5px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
+                style={{
+                  backgroundColor: "var(--text)",
+                  transform: drawerOpen ? "translateY(-6px) rotate(-45deg)" : "none",
+                }}
+              />
+            </div>
+          </button>
+        </div>
       </header>
 
       {/* Mobile: Backdrop */}
@@ -328,14 +341,14 @@ export function Navigation() {
           className="flex-1 flex flex-col justify-center px-6 md:px-12 gap-1"
           aria-label="Mobile navigation"
         >
-          {NAV_LINKS.map((link, i) => (
+          {navLinks.map((link, i) => (
             <a
-              key={link.label}
+              key={link.href}
               href={link.href}
               onClick={handleLinkClick}
               className="group flex items-baseline gap-4 min-h-11 py-3 transition-colors duration-200"
               style={{
-                borderBottom: i < NAV_LINKS.length - 1 ? "1px solid var(--border-custom)" : "none",
+                borderBottom: i < navLinks.length - 1 ? "1px solid var(--border-custom)" : "none",
               }}
               tabIndex={drawerOpen ? 0 : -1}
             >

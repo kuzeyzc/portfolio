@@ -1,8 +1,9 @@
 "use client";
 
 import { CareerSection } from "@/components/sections/career-section";
-import { EXPERIENCE_ENTRIES } from "@/lib/experience-data";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export function ExperienceSection() {
-  return <CareerSection id="experience" entries={EXPERIENCE_ENTRIES} />;
+  const { t } = useLanguage();
+  return <CareerSection id="experience" entries={t.experience} />;
 }

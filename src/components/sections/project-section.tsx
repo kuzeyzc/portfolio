@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { gsap, SplitText } from "@/lib/gsap";
 import { Container } from "@/components/layout/container";
 import { PROJECTS, type Project } from "@/lib/projects-data";
@@ -10,6 +10,7 @@ import { PrSenseiThumbnail } from "@/components/ui/pr-sensei-thumbnail";
 import { LlmCookbookThumbnail } from "@/components/ui/llm-cookbook-thumbnail";
 import { FinancialSaasThumbnail } from "@/components/ui/financial-saas-thumbnail";
 import { AnimatedThumbnail } from "@/components/ui/animated-thumbnail";
+import { useLanguage } from "@/components/providers/language-provider";
 
 /* ──────────────────────────────────────────────────────────
    THUMBNAIL RENDERER
@@ -84,6 +85,7 @@ function TechPills({ pills }: { pills: string[] }) {
    ────────────────────────────────────────────────────────── */
 
 function ProjectLinks({ project }: { project: Project }) {
+  const { t } = useLanguage();
   return (
     <div className="flex items-center gap-5 sm:gap-6">
       {project.links.live && (
@@ -95,7 +97,7 @@ function ProjectLinks({ project }: { project: Project }) {
           style={{ color: "var(--accent-raw)", fontSize: "var(--text-label)" }}
         >
           <ArrowUpRight size={14} />
-          Live Demo
+          {t.projectsUi.liveDemo}
         </a>
       )}
       <a
@@ -117,6 +119,7 @@ function ProjectLinks({ project }: { project: Project }) {
    ────────────────────────────────────────────────────────── */
 
 function WhyBuiltIt({ text }: { text: string }) {
+  const { t } = useLanguage();
   const [expanded, setExpanded] = useState(false);
   return (
     <div className="mt-5">
@@ -133,7 +136,7 @@ function WhyBuiltIt({ text }: { text: string }) {
           className="transition-transform duration-300"
           style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
         />
-        Why I built it
+        {t.projectsUi.whyBuilt}
       </button>
       <div className="project-why-expand" data-expanded={expanded ? "true" : "false"}>
         <div>
@@ -253,6 +256,23 @@ function MobileProjectCard({ project }: { project: Project }) {
    ══════════════════════════════════════════════════════════ */
 
 export function ProjectsSection() {
+  const { t } = useLanguage();
+  const projects = useMemo(
+    () =>
+      PROJECTS.map((project) => {
+        const localized = t.projects[project.id];
+        return {
+          ...project,
+          oneLiner: localized.oneLiner,
+          detailedDescription: localized.detailedDescription,
+          whyIBuiltIt: localized.whyIBuiltIt,
+          image: project.image
+            ? { ...project.image, alt: localized.imageAlt ?? project.image.alt }
+            : undefined,
+        };
+      }),
+    [t]
+  );
   const sectionRef = useRef<HTMLElement>(null);
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -426,7 +446,7 @@ export function ProjectsSection() {
               DESKTOP: Typographic rows (lg+)
               ══════════════════════════════════════════ */}
           <div className="hidden lg:block">
-            {PROJECTS.map((project, i) => {
+            {projects.map((project, i) => {
               const isExpanded = expandedIndex === i;
               return (
                 <div
@@ -524,7 +544,7 @@ export function ProjectsSection() {
               MOBILE: Stacked accordion (<lg)
               ══════════════════════════════════════════ */}
           <div className="lg:hidden">
-            {PROJECTS.map((project, i) => (
+            {projects.map((project, i) => (
               <div key={project.id}>
                 {i > 0 && (
                   <div
@@ -555,7 +575,7 @@ export function ProjectsSection() {
           willChange: "transform, opacity",
         }}
       >
-        {PROJECTS.map((project, i) => (
+        {projects.map((project, i) => (
           <div
             key={project.id}
             data-preview-thumb

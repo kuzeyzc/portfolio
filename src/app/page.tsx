@@ -14,12 +14,13 @@ import { ExperienceSection } from "@/components/sections/experience-section";
 import { EducationSection } from "@/components/sections/education-section";
 import { ContactSection } from "@/components/sections/contact-section";
 import { FooterSection } from "@/components/sections/footer-section";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export default function Home() {
+  const { t } = useLanguage();
   const lenis = useLenis();
   const [isLoading, setIsLoading] = useState(true);
   const [heroRevealed, setHeroRevealed] = useState(false);
-  const [heroReady, setHeroReady] = useState(false);
 
   useLayoutEffect(() => {
     resetPageScroll(lenis);
@@ -35,22 +36,20 @@ export default function Home() {
 
     setIsLoading(false);
     setHeroRevealed(true);
+    unlockScroll();
 
     requestAnimationFrame(() => {
-      resetPageScroll(lenis);
-      unlockScroll();
       ScrollTrigger.refresh();
     });
   }, [lenis, unlockScroll]);
 
   const handleHeroReady = useCallback(() => {
-    setHeroReady(true);
-    resetPageScroll(lenis);
+    // Hero reveal finished — refresh ScrollTrigger only; never reset scroll here
+    // (user may already be scrolling and would get yanked to top).
     requestAnimationFrame(() => {
-      resetPageScroll(lenis);
       ScrollTrigger.refresh();
     });
-  }, [lenis]);
+  }, []);
 
   return (
     <>
@@ -64,32 +63,32 @@ export default function Home() {
         </div>
 
         <div className="dark-zone">
-          <SectionMarquee text="HAKKIMDA" direction="left" speed={22} />
+          <SectionMarquee text={t.marquees.about} direction="left" speed={22} />
           <AboutSection />
         </div>
 
         <div className="light-zone">
-          <SectionMarquee text="YETENEKLER" direction="right" speed={18} />
+          <SectionMarquee text={t.marquees.skills} direction="right" speed={18} />
           <SkillsSection />
         </div>
 
         <div className="dark-zone">
-          <SectionMarquee text="PROJELER" direction="left" speed={16} />
+          <SectionMarquee text={t.marquees.projects} direction="left" speed={16} />
           <ProjectsSection />
         </div>
 
         <div className="light-zone">
-          <SectionMarquee text="DENEYİM" direction="right" speed={24} />
+          <SectionMarquee text={t.marquees.experience} direction="right" speed={24} />
           <ExperienceSection />
         </div>
 
         <div className="dark-zone">
-          <SectionMarquee text="EĞİTİM" direction="left" speed={24} />
+          <SectionMarquee text={t.marquees.education} direction="left" speed={24} />
           <EducationSection />
         </div>
 
         <div className="light-zone">
-          <SectionMarquee text="İLETİŞİME GEÇİN" direction="right" speed={26} />
+          <SectionMarquee text={t.marquees.contact} direction="right" speed={26} />
           <ContactSection />
         </div>
 

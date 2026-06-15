@@ -3,13 +3,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap, SplitText } from "@/lib/gsap";
 import { Container } from "@/components/layout/container";
-import {
-  ABOUT_HEADLINE,
-  ABOUT_PHILOSOPHY,
-  ABOUT_AVAILABILITY,
-  ABOUT_INTERESTS,
-} from "@/lib/about-data";
-import Image from "next/image";
+import { useLanguage } from "@/components/providers/language-provider";
+import type { AboutStat } from "@/lib/i18n/types";
 
 /* ──────────────────────────────────────────────────────────
    ABOUT SECTION — Editorial Layout (Rachel Chen-inspired)
@@ -19,40 +14,10 @@ import Image from "next/image";
      Body paragraphs     → Satoshi, --text-body              readable
      Bullets             → Satoshi, --text-body-sm           quieter
 
-   Photo grid (6 columns):
-     Slot 1 — Static: you in snow
-     Slot 2 — Crossfade: places (UTD, Mumbai, Sedona)
-     Slot 3 — Crossfade: skies
-     Slot 4 — Crossfade: travel/nature
-     Slot 5 — Static: you cooking
-     Slot 6 — Spotify
+   Bento grid (5 columns):
+     Slots 1–4 — Typography stat cards
+     Slot 5 — Spotify
    ────────────────────────────────────────────────────────── */
-
-/* ── Slot 2: Places crossfade ── */
-const PLACES_PHOTOS = [
-  { src: "/images/about-2.jpeg", alt: "UTD campus aerial" },
-  { src: "/images/about-3.jpeg", alt: "UTD fall walkway" },
-  { src: "/images/about-4.jpeg", alt: "Mumbai beach sunset" },
-  { src: "/images/about-5.jpeg", alt: "Sedona panorama" },
-];
-
-/* ── Slot 3: Sky crossfade ── */
-const SKY_PHOTOS = [
-  { src: "/images/about-6.jpeg", alt: "Pink sunset lake reflection" },
-  { src: "/images/about-7.jpeg", alt: "Red sun on ocean" },
-  { src: "/images/about-8.jpeg", alt: "Golden cumulonimbus" },
-  { src: "/images/about-9.jpeg", alt: "Fiery orange sky" },
-];
-
-/* ── Slot 4: Travel/Nature crossfade ── */
-const TRAVEL_PHOTOS = [
-  { src: "/images/about-10.jpeg", alt: "Sedona red rock" },
-  { src: "/images/about-11.jpeg", alt: "Gatlinburg forest road" },
-  { src: "/images/about-12.jpeg", alt: "Tree canopy" },
-  { src: "/images/about-13.jpeg", alt: "Dramatic clouds" },
-  { src: "/images/about-14.jpeg", alt: "Gatlinburg stairs" },
-  { src: "/images/about-15.jpeg", alt: "Sedona trail" },
-];
 
 /* ── Spotify playlists ── */
 const SPOTIFY_PLAYLISTS = [
@@ -67,49 +32,34 @@ const SPOTIFY_PLAYLISTS = [
 ];
 
 /* ──────────────────────────────────────────────────────────
-   CROSSFADE — auto-cycles through images
+   BENTO STAT CARD — interactive typography tile
    ────────────────────────────────────────────────────────── */
 
-function PhotoCrossfade({
-  photos,
-  interval = 3500,
-}: {
-  photos: { src: string; alt: string }[];
-  interval?: number;
-}) {
-  const [active, setActive] = useState(0);
+/* ── Shared bento row height (matches Spotify compact embed) ── */
+const BENTO_ROW_MIN_H = "min-h-[352px]";
 
-  useEffect(() => {
-    if (photos.length <= 1) return;
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-
-    const timer = setInterval(() => {
-      setActive((prev) => (prev + 1) % photos.length);
-    }, interval);
-
-    return () => clearInterval(timer);
-  }, [photos.length, interval]);
-
+function BentoStatCard({ stat, index }: { stat: AboutStat; index: number }) {
   return (
-    <div className="relative w-full overflow-hidden rounded-lg" style={{ aspectRatio: "3/4" }}>
-      {photos.map((photo, i) => (
-        <div
-          key={photo.src}
-          className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
-          style={{ opacity: i === active ? 1 : 0 }}
-        >
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 640px) 30vw, (max-width: 1024px) 22vw, 14vw"
-          />
-        </div>
-      ))}
-    </div>
+    <article
+      className={`group relative flex w-full h-full ${BENTO_ROW_MIN_H} flex-col justify-between overflow-hidden rounded-2xl border border-black/10 bg-white p-6 md:p-7 text-left shadow-sm transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:border-blue-600 hover:bg-white hover:shadow-[0_10px_30px_-10px_rgba(37,99,235,0.3)] focus-within:border-blue-600 focus-within:shadow-[0_10px_30px_-10px_rgba(37,99,235,0.3)]`}
+      tabIndex={0}
+    >
+      <div className="flex flex-col">
+        <span className="font-mono text-[0.625rem] tracking-[0.14em] uppercase text-black/55 mb-4 font-semibold">
+          0{index + 1}
+        </span>
+        <h3 className="font-display text-6xl md:text-7xl font-bold tracking-tighter text-black transition-colors duration-300 group-hover:text-blue-600 group-focus-within:text-blue-600">
+          {stat.title}
+        </h3>
+        <p className="text-xs font-black tracking-[0.2em] text-blue-700 uppercase mt-3">
+          {stat.subtitle}
+        </p>
+      </div>
+
+      <p className="font-body text-base md:text-[1.0625rem] text-black leading-relaxed font-semibold">
+        {stat.desc}
+      </p>
+    </article>
   );
 }
 
@@ -181,11 +131,10 @@ function SpotifySlot({ playlists }: { playlists: { id: string; name: string }[] 
   };
 
   return (
-    <>
+    <div className={`relative w-full h-full ${BENTO_ROW_MIN_H}`}>
       {/* ══ LARGE MONITOR (1800px+): full iframe ══ */}
       <div
-        className="relative w-full overflow-hidden rounded-lg group hidden min-[1800px]:block"
-        style={{ aspectRatio: "3/4" }}
+        className="relative w-full h-full overflow-hidden rounded-lg group hidden min-[1800px]:block"
       >
         {playlists.map((pl, i) => (
           <div
@@ -200,7 +149,7 @@ function SpotifySlot({ playlists }: { playlists: { id: string; name: string }[] 
             <iframe
               src={`https://open.spotify.com/embed/playlist/${pl.id}?utm_source=generator`}
               width="100%"
-              height="100%"
+              height="352"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               allowFullScreen
               loading="lazy"
@@ -251,8 +200,7 @@ function SpotifySlot({ playlists }: { playlists: { id: string; name: string }[] 
         href={`https://open.spotify.com/playlist/${current.id}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="relative w-full overflow-hidden rounded-lg block min-[1800px]:hidden group/card"
-        style={{ aspectRatio: "3/4" }}
+        className="relative w-full h-full overflow-hidden rounded-lg block min-[1800px]:hidden group/card"
       >
         {covers[current.id] ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -340,7 +288,7 @@ function SpotifySlot({ playlists }: { playlists: { id: string; name: string }[] 
           </>
         )}
       </a>
-    </>
+    </div>
   );
 }
 
@@ -349,6 +297,7 @@ function SpotifySlot({ playlists }: { playlists: { id: string; name: string }[] 
    ────────────────────────────────────────────────────────── */
 
 export function AboutSection() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const subheadRef = useRef<HTMLParagraphElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
@@ -416,7 +365,7 @@ export function AboutSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="relative w-full overflow-hidden">
+    <section ref={sectionRef} id="about" className="relative w-full overflow-x-hidden">
       <div className="py-[10vh] sm:py-[12vh] lg:py-0 lg:pt-16 lg:pb-12 lg:min-h-screen lg:flex lg:items-center">
         <Container className="w-full">
           {/* ── Text block — full width until ultrawide ── */}
@@ -424,27 +373,27 @@ export function AboutSection() {
             {/* Statement — Satoshi, subtitle size, entrance element */}
             <p
               ref={subheadRef}
-              className="font-body font-medium text-balance text-4xl md:text-6xl tracking-[-0.015em] leading-[1.35] mb-6 sm:mb-4 lg:mb-6 2xl:max-w-[77%]"
+              className="font-body font-bold text-balance text-5xl md:text-7xl tracking-[-0.015em] leading-[1.35] mb-8 sm:mb-8 lg:mb-10 2xl:max-w-[77%]"
               style={{
                 color: "var(--text)",
-                opacity: 0.8,
+                opacity: 1,
               }}
             >
-              {ABOUT_HEADLINE}
+              {t.about.headline}
             </p>
 
             {/* Body content */}
-            <div ref={bodyRef} className="space-y-4 sm:space-y-5">
+            <div ref={bodyRef} className="space-y-6 sm:space-y-7">
               {/* P1 */}
               <p
                 className="font-body leading-[1.7]"
                 style={{
                   color: "var(--text)",
-                  fontSize: "var(--text-body)",
-                  opacity: 0.85,
+                  fontSize: "var(--text-body-lg)",
+                  opacity: 0.75,
                 }}
               >
-                {ABOUT_PHILOSOPHY}
+                {t.about.philosophy}
               </p>
 
               {/* P2 — Availability */}
@@ -452,17 +401,17 @@ export function AboutSection() {
                 className="font-body leading-[1.7]"
                 style={{
                   color: "var(--text)",
-                  fontSize: "var(--text-body)",
-                  opacity: 0.85,
+                  fontSize: "var(--text-body-lg)",
+                  opacity: 1,
                 }}
               >
-                {ABOUT_AVAILABILITY}
+                {t.about.availability}
               </p>
 
               {/* P3 — Interests */}
               <div>
-                <ul className="space-y-1.5">
-                  {ABOUT_INTERESTS.map((item) => (
+                <ul className="space-y-2.5 sm:space-y-3">
+                  {t.about.interests.map((item) => (
                     <li key={item} className="flex items-baseline gap-2.5">
                       <span
                         className="w-[5px] h-[5px] rounded-full shrink-0 relative top-[-2px]"
@@ -472,7 +421,7 @@ export function AboutSection() {
                         className="font-body leading-[1.7]"
                         style={{
                           color: "var(--text)",
-                          fontSize: "var(--text-body-sm)",
+                          fontSize: "var(--text-body)",
                           opacity: 0.7,
                         }}
                       >
@@ -485,55 +434,14 @@ export function AboutSection() {
             </div>
           </div>
 
-          {/* ── Photo strip — ALWAYS full container width ── */}
-          <div ref={photoStripRef} className="mt-10 sm:mt-12 lg:mt-14">
-            <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-3.5 lg:grid-cols-6 lg:gap-4">
-              {/* Slot 1: You in snow (static) */}
-              <div
-                className="relative overflow-hidden rounded-lg"
-                style={{ aspectRatio: "3/4" }}
-                data-cursor-label="THIS IS ME!"
-              >
-                <Image
-                  src="/images/about-1.jpeg"
-                  alt="Raj in snow"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 30vw, (max-width: 1024px) 22vw, 14vw"
-                />
-              </div>
+          {/* ── Bento stats strip — full container width ── */}
+          <div ref={photoStripRef} className="mt-10 sm:mt-12 lg:mt-14 w-full py-4">
+            <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 items-stretch justify-items-stretch pt-4 pb-4">
+              {t.about.stats.map((stat, index) => (
+                <BentoStatCard key={stat.subtitle} stat={stat} index={index} />
+              ))}
 
-              {/* Slot 2: Places crossfade */}
-              <div data-cursor-label="EXPLORING">
-                <PhotoCrossfade photos={PLACES_PHOTOS} interval={5000} />
-              </div>
-
-              {/* Slot 3: Sky crossfade */}
-              <div data-cursor-label="SKY OBSESSED">
-                <PhotoCrossfade photos={SKY_PHOTOS} interval={5500} />
-              </div>
-
-              {/* Slot 4: Travel/Nature crossfade */}
-              <div data-cursor-label="ADVENTURING">
-                <PhotoCrossfade photos={TRAVEL_PHOTOS} interval={6000} />
-              </div>
-
-              {/* Slot 5: You cooking (static) */}
-              <div
-                className="relative overflow-hidden rounded-lg"
-                style={{ aspectRatio: "3/4" }}
-                data-cursor-label="CHEF MODE"
-              >
-                <Image
-                  src="/images/about-16.jpeg"
-                  alt="Raj cooking"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 30vw, (max-width: 1024px) 22vw, 14vw"
-                />
-              </div>
-
-              {/* Slot 6: Spotify */}
+              {/* Spotify */}
               <SpotifySlot playlists={SPOTIFY_PLAYLISTS} />
             </div>
           </div>
