@@ -3,6 +3,7 @@
 
 import { useEffect, useRef, useState, Fragment } from "react";
 import { gsap, SplitText } from "@/lib/gsap";
+import { useDeferredAnimationsEffect } from "@/hooks/use-deferred-animations";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
 import { Magnetic } from "@/components/ui/magnetic";
 import { LiveClock } from "@/components/ui/live-clock";
@@ -55,7 +56,7 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
   }, [revealed, phase]);
 
   // ── Phase 2: Reveal ──
-  useEffect(() => {
+  useDeferredAnimationsEffect(() => {
     if (phase !== "revealing" || !sectionRef.current) return;
 
     revealDoneRef.current = false;

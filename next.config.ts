@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  compress: true,
   devIndicators: false,
   reactStrictMode: true,
   images: {
@@ -10,6 +11,16 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "i.scdn.co",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "mosaic.scdn.co",
         pathname: "/**",
       },
     ],

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { gsap, SplitText } from "@/lib/gsap";
+import { useDeferredAnimationsEffect } from "@/hooks/use-deferred-animations";
 import { Container } from "@/components/layout/container";
 import { PROJECTS, type Project } from "@/lib/projects-data";
 import { Github, ArrowUpRight, ChevronDown } from "lucide-react";
@@ -29,6 +30,7 @@ function ProjectThumbnail({ project }: { project: Project }) {
           fill
           className="object-cover"
           sizes="(max-width: 1023px) 100vw, 45vw"
+          loading="lazy"
           priority={false}
         />
       </div>
@@ -384,7 +386,7 @@ export function ProjectsSection() {
   };
 
   /* ── GSAP Scroll Entrance ── */
-  useEffect(() => {
+  useDeferredAnimationsEffect(() => {
     if (!sectionRef.current) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

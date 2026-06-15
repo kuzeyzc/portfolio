@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { gsap } from "@/lib/gsap";
+import { useDeferredAnimationsEffect } from "@/hooks/use-deferred-animations";
 import { Container } from "@/components/layout/container";
 import { useLanguage } from "@/components/providers/language-provider";
 import type { CareerEntry } from "@/components/sections/career-section";
@@ -74,7 +75,7 @@ export function EducationSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useDeferredAnimationsEffect(() => {
     if (!sectionRef.current) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

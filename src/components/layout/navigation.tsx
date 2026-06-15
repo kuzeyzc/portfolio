@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { gsap } from "@/lib/gsap";
+import { useDeferredAnimationsEffect } from "@/hooks/use-deferred-animations";
 import { ScrambleText } from "@/components/ui/scramble-text";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { useLanguage } from "@/components/providers/language-provider";
@@ -28,7 +29,7 @@ export function Navigation() {
   );
 
   /* ── GSAP Scrub: continuous morph from full-width → compact centered ── */
-  useEffect(() => {
+  useDeferredAnimationsEffect(() => {
     if (typeof window === "undefined" || window.innerWidth < 1024) return;
     if (!navWrapRef.current || !navBarRef.current) return;
 

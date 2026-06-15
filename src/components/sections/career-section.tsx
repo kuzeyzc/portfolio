@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { gsap, SplitText } from "@/lib/gsap";
+import { useDeferredAnimationsEffect } from "@/hooks/use-deferred-animations";
 import { Container } from "@/components/layout/container";
 
 /* ────────────────────────────────────────────
@@ -133,7 +134,7 @@ export function CareerSection({ id, entries }: CareerSectionProps) {
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   /* ── GSAP Scroll Entrance ── */
-  useEffect(() => {
+  useDeferredAnimationsEffect(() => {
     if (!sectionRef.current) return;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap, SplitText } from "@/lib/gsap";
+import { useDeferredAnimationsEffect } from "@/hooks/use-deferred-animations";
 import { Container } from "@/components/layout/container";
 import { type Project } from "@/lib/projects-data";
 import { Github, ArrowUpRight, ChevronDown } from "lucide-react";
@@ -121,6 +122,7 @@ function DesktopThumbnail({ project, imageHovered }: { project: Project; imageHo
           fill
           className="object-cover transition-all duration-700 ease-out"
           sizes="(max-width: 1280px) 60vw, 55vw"
+          loading="lazy"
           priority={false}
         />
       </div>
@@ -171,6 +173,7 @@ function MobileThumbnail({ project }: { project: Project }) {
         fill
         className="object-cover"
         sizes="100vw"
+        loading="lazy"
         priority={false}
       />
     );
@@ -243,7 +246,7 @@ export function ProjectCard({ project, direction, numberOffsetY }: ProjectCardPr
   }, []);
 
   // ── Scroll animations ──
-  useEffect(() => {
+  useDeferredAnimationsEffect(() => {
     if (!cardRef.current || !nameRef.current) return;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) {

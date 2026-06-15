@@ -8,12 +8,15 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { Navigation } from "@/components/layout/navigation";
 import { SectionMarquee } from "@/components/layout/section-marquee";
 import { AboutSection } from "@/components/sections/about-section";
-import { SkillsSection } from "@/components/sections/skills-section";
 import { ProjectsSection } from "@/components/sections/project-section";
-import { ExperienceSection } from "@/components/sections/experience-section";
-import { EducationSection } from "@/components/sections/education-section";
-import { ContactSection } from "@/components/sections/contact-section";
 import { FooterSection } from "@/components/sections/footer-section";
+import { ViewportLazySection } from "@/components/layout/viewport-lazy-section";
+import {
+  SkillsSection,
+  ExperienceSection,
+  EducationSection,
+  ContactSection,
+} from "@/lib/lazy-sections";
 import { useLanguage } from "@/components/providers/language-provider";
 
 export default function Home() {
@@ -44,8 +47,6 @@ export default function Home() {
   }, [lenis, unlockScroll]);
 
   const handleHeroReady = useCallback(() => {
-    // Hero reveal finished — refresh ScrollTrigger only; never reset scroll here
-    // (user may already be scrolling and would get yanked to top).
     requestAnimationFrame(() => {
       ScrollTrigger.refresh();
     });
@@ -69,7 +70,9 @@ export default function Home() {
 
         <div className="light-zone">
           <SectionMarquee text={t.marquees.skills} direction="right" speed={18} />
-          <SkillsSection />
+          <ViewportLazySection placeholderClassName="min-h-[55vh]">
+            <SkillsSection />
+          </ViewportLazySection>
         </div>
 
         <div className="dark-zone">
@@ -79,17 +82,23 @@ export default function Home() {
 
         <div className="light-zone">
           <SectionMarquee text={t.marquees.experience} direction="right" speed={24} />
-          <ExperienceSection />
+          <ViewportLazySection placeholderClassName="min-h-[60vh]">
+            <ExperienceSection />
+          </ViewportLazySection>
         </div>
 
         <div className="dark-zone">
           <SectionMarquee text={t.marquees.education} direction="left" speed={24} />
-          <EducationSection />
+          <ViewportLazySection placeholderClassName="min-h-[50vh]">
+            <EducationSection />
+          </ViewportLazySection>
         </div>
 
         <div className="light-zone">
           <SectionMarquee text={t.marquees.contact} direction="right" speed={26} />
-          <ContactSection />
+          <ViewportLazySection placeholderClassName="min-h-[65vh]">
+            <ContactSection />
+          </ViewportLazySection>
         </div>
 
         <div className="dark-zone">

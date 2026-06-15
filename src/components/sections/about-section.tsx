@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback, memo } from "react";
+import Image from "next/image";
 import { gsap, SplitText } from "@/lib/gsap";
+import { useDeferredAnimationsEffect } from "@/hooks/use-deferred-animations";
 import { Container } from "@/components/layout/container";
 import { useLanguage } from "@/components/providers/language-provider";
 import type { AboutStat } from "@/lib/i18n/types";
@@ -209,11 +211,13 @@ function SpotifySlot({ playlists }: { playlists: { id: string; name: string }[] 
         className="relative w-full h-full overflow-hidden rounded-lg block min-[1800px]:hidden group/card"
       >
         {covers[current.id] ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={covers[current.id]}
             alt={current.name}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover/card:scale-105"
+            fill
+            loading="lazy"
+            sizes="(max-width: 1800px) 30vw, 360px"
+            className="object-cover transition-transform duration-500 ease-out group-hover/card:scale-105"
           />
         ) : (
           <div
@@ -311,7 +315,7 @@ export function AboutSection() {
   const hrTopRef = useRef<HTMLDivElement>(null);
   const hrBottomRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useDeferredAnimationsEffect(() => {
     if (!sectionRef.current) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

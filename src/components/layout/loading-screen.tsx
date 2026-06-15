@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { resetPageScroll, useLenis } from "@/components/providers/smooth-scroll-provider";
+import { useDeferredAnimationsReady } from "@/hooks/use-deferred-animations";
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -33,6 +34,7 @@ const charVariants = {
 
 export function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const lenis = useLenis();
+  const animationsReady = useDeferredAnimationsReady();
   const [typingComplete, setTypingComplete] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const typingDoneRef = useRef(false);
@@ -109,7 +111,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
             className="inline-flex items-baseline justify-center"
             variants={containerVariants}
             initial="hidden"
-            animate="visible"
+            animate={animationsReady ? "visible" : "hidden"}
             onAnimationComplete={handleTypingComplete}
           >
             {TEXT.split("").map((char, index) => (

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { gsap } from "@/lib/gsap";
+import { useDeferredAnimationsEffect } from "@/hooks/use-deferred-animations";
 import { Container } from "@/components/layout/container";
 import { Magnetic } from "@/components/ui/magnetic";
 import { ArrowUp } from "lucide-react";
@@ -19,7 +20,7 @@ export function FooterSection() {
   }, []);
 
   // ── GSAP Entrance ──
-  useEffect(() => {
+  useDeferredAnimationsEffect(() => {
     if (!footerRef.current) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

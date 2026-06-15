@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, memo } from "react";
+import { useRef, memo } from "react";
 import { gsap } from "@/lib/gsap";
+import { useDeferredAnimationsEffect } from "@/hooks/use-deferred-animations";
 
 /* ──────────────────────────────────────────────────────────
    SECTION MARQUEE
@@ -29,7 +30,7 @@ export const SectionMarquee = memo(function SectionMarquee({
   const wrapRef = useRef<HTMLDivElement>(null);
 
   /* ── Scroll entrance — fade in ── */
-  useEffect(() => {
+  useDeferredAnimationsEffect(() => {
     if (!wrapRef.current) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
