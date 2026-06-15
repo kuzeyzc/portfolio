@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SITE_LINKS, SITE_NAME } from "@/lib/site-links";
+import { azeretMono, clashDisplay, satoshi } from "@/lib/fonts";
 
 
 export const metadata: Metadata = {
@@ -67,7 +68,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${clashDisplay.variable} ${satoshi.variable} ${azeretMono.variable}`}
+    >
       <head>
         {/* Favicon */}
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -76,29 +81,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
         <link rel="manifest" href="/site.webmanifest" />
-
-        {/* Critical font preloads */}
-        <link
-          rel="preload"
-          href="/fonts/ClashDisplay-Bold.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/Satoshi-Medium.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/AzeretMono-Regular.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
 
         {/* Lock scroll position before hydration */}
         <script
@@ -130,7 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="font-body antialiased">
+      <body className={`${satoshi.className} antialiased`}>
         <ThemeProvider>
           <LanguageProvider>
           <SmoothScrollProvider>

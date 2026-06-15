@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, memo } from "react";
 import { gsap, SplitText } from "@/lib/gsap";
 import { Container } from "@/components/layout/container";
 import { useLanguage } from "@/components/providers/language-provider";
@@ -38,10 +38,16 @@ const SPOTIFY_PLAYLISTS = [
 /* ── Shared bento row height (matches Spotify compact embed) ── */
 const BENTO_ROW_MIN_H = "min-h-[352px]";
 
-function BentoStatCard({ stat, index }: { stat: AboutStat; index: number }) {
+const BentoStatCard = memo(function BentoStatCard({
+  stat,
+  index,
+}: {
+  stat: AboutStat;
+  index: number;
+}) {
   return (
     <article
-      className={`group relative flex w-full h-full ${BENTO_ROW_MIN_H} flex-col justify-between overflow-hidden rounded-2xl border border-black/10 bg-white p-6 md:p-7 text-left shadow-sm transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:border-blue-600 hover:bg-white hover:shadow-[0_10px_30px_-10px_rgba(37,99,235,0.3)] focus-within:border-blue-600 focus-within:shadow-[0_10px_30px_-10px_rgba(37,99,235,0.3)]`}
+      className={`bento-stat-card group relative flex w-full h-full ${BENTO_ROW_MIN_H} flex-col justify-between overflow-hidden rounded-2xl border border-black/10 bg-white p-6 md:p-7 text-left shadow-sm hover:border-blue-600 hover:bg-white focus-within:border-blue-600`}
       tabIndex={0}
     >
       <div className="flex flex-col">
@@ -61,7 +67,7 @@ function BentoStatCard({ stat, index }: { stat: AboutStat; index: number }) {
       </p>
     </article>
   );
-}
+});
 
 /* ──────────────────────────────────────────────────────────
    SPOTIFY ICON

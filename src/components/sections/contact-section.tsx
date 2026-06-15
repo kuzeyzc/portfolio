@@ -271,7 +271,7 @@ export function ContactSection() {
           <button
             type="submit"
             disabled={sending}
-            className="w-full h-16 mt-2 rounded-full bg-black text-white text-lg font-medium hover:bg-blue-600 hover:-translate-y-1 hover:shadow-[0_10px_20px_-10px_rgba(37,99,235,0.6)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none disabled:hover:translate-y-0 disabled:hover:bg-black disabled:hover:shadow-none"
+            className="contact-submit-glow w-full h-16 mt-2 rounded-full bg-black text-white text-lg font-medium hover:bg-blue-600 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none disabled:hover:bg-black"
             data-cursor-hover
           >
             {sending ? t.contact.submitting : t.contact.submit}

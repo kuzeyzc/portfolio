@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { gsap, SplitText } from "@/lib/gsap";
 import { Container } from "@/components/layout/container";
 import { PROJECTS, type Project } from "@/lib/projects-data";
@@ -282,17 +282,38 @@ export function ProjectsSection() {
   const previewYRef = useRef({ current: -200, target: -200 });
   const activePreview = useRef<number>(-1);
   const rafRef = useRef<number>(0);
+  const previewLoopActive = useRef(false);
+  const previewTweenRef = useRef<gsap.core.Tween | null>(null);
 
   /* ── Expanded project state ── */
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
-  /* ── Cursor preview: smooth follow loop ── */
   useEffect(() => {
-    if (typeof window === "undefined" || window.innerWidth < 1024) return;
+    if (!previewRef.current) return;
 
+    const ctx = gsap.context(() => {}, previewRef);
+
+    return () => {
+      previewLoopActive.current = false;
+      previewTweenRef.current?.kill();
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      ctx.revert();
+    };
+  }, []);
+
+  const startPreviewLoop = useCallback(() => {
+    if (typeof window === "undefined" || window.innerWidth < 1024) return;
+    if (previewLoopActive.current) return;
+
+    previewLoopActive.current = true;
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     const tick = () => {
+      if (!previewLoopActive.current) {
+        rafRef.current = 0;
+        return;
+      }
+
       const px = previewXRef.current;
       const py = previewYRef.current;
       px.current = lerp(px.current, px.target, 0.12);
@@ -301,11 +322,15 @@ export function ProjectsSection() {
       if (previewRef.current) {
         previewRef.current.style.transform = `translate3d(${px.current}px, ${py.current}px, 0)`;
       }
+
       rafRef.current = requestAnimationFrame(tick);
     };
 
     rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
+  const stopPreviewLoop = useCallback(() => {
+    previewLoopActive.current = false;
   }, []);
 
   /* ── Mouse handlers for preview ── */
@@ -314,13 +339,15 @@ export function ProjectsSection() {
     if (expandedIndex === index) return;
 
     activePreview.current = index;
+    startPreviewLoop();
 
     if (previewRef.current) {
       const thumbs = previewRef.current.querySelectorAll<HTMLDivElement>("[data-preview-thumb]");
       thumbs.forEach((t, i) => {
         t.style.opacity = i === index ? "1" : "0";
       });
-      gsap.to(previewRef.current, {
+      previewTweenRef.current?.kill();
+      previewTweenRef.current = gsap.to(previewRef.current, {
         opacity: 1,
         scale: 1,
         duration: 0.35,
@@ -332,8 +359,11 @@ export function ProjectsSection() {
 
   const handleRowLeave = () => {
     activePreview.current = -1;
+    stopPreviewLoop();
+
     if (previewRef.current) {
-      gsap.to(previewRef.current, {
+      previewTweenRef.current?.kill();
+      previewTweenRef.current = gsap.to(previewRef.current, {
         opacity: 0,
         scale: 0.92,
         duration: 0.25,
@@ -567,7 +597,7 @@ export function ProjectsSection() {
           ══════════════════════════════════════════ */}
       <div
         ref={previewRef}
-        className="fixed top-0 left-0 z-40 pointer-events-none hidden lg:block"
+        className="fixed top-0 left-0 z-40 pointer-events-none hidden lg:block gpu-layer"
         style={{
           width: "clamp(260px, 22vw, 360px)",
           opacity: 0,

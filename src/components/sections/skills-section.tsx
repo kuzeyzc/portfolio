@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import { gsap } from "@/lib/gsap";
 import { Container } from "@/components/layout/container";
 import { useLanguage } from "@/components/providers/language-provider";
 import type { LocalizedSkill } from "@/lib/i18n/types";
 
 const SKILL_BADGE_CLASS =
-  "inline-flex items-center px-5 py-2.5 rounded-full border border-black/10 bg-black/5 text-sm font-medium text-black/80 transition-all duration-300 ease-out cursor-default hover:-translate-y-1 hover:bg-primary hover:text-primary-foreground hover:border-primary hover:shadow-[0_8px_16px_-6px_rgba(37,99,235,0.4)]";
+  "skill-badge-pill inline-flex items-center px-5 py-2.5 rounded-full border border-black/10 bg-black/5 text-sm font-medium text-black/80 cursor-default hover:bg-primary hover:text-primary-foreground hover:border-primary";
 
 /* ──────────────────────────────────────────────────────────
    SKILL BADGES — interactive pills
    ────────────────────────────────────────────────────────── */
 
-function SkillBadges({ pills }: { pills: string[] }) {
+const SkillBadges = memo(function SkillBadges({ pills }: { pills: string[] }) {
   return (
     <div className="flex flex-wrap gap-4">
       {pills.map((tech) => (
@@ -23,7 +23,7 @@ function SkillBadges({ pills }: { pills: string[] }) {
       ))}
     </div>
   );
-}
+});
 
 /* ──────────────────────────────────────────────────────────
    SKILL CELL — category name + skill badges

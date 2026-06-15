@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { useLanguage } from "@/components/providers/language-provider";
 import { cn } from "@/lib/utils";
 
@@ -9,7 +10,10 @@ interface LanguageSwitcherProps {
   variant?: "nav" | "drawer";
 }
 
-export function LanguageSwitcher({ className, variant = "nav" }: LanguageSwitcherProps) {
+export const LanguageSwitcher = memo(function LanguageSwitcher({
+  className,
+  variant = "nav",
+}: LanguageSwitcherProps) {
   const { lang, setLang } = useLanguage();
 
   const baseClass =
@@ -49,4 +53,4 @@ export function LanguageSwitcher({ className, variant = "nav" }: LanguageSwitche
       </button>
     </div>
   );
-}
+});

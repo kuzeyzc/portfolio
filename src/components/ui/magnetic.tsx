@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback, type ReactNode } from "react";
+import { useRef, useCallback, useEffect, type ReactNode } from "react";
 import { gsap } from "@/lib/gsap";
 
 interface MagneticProps {
@@ -15,10 +15,33 @@ interface MagneticProps {
 
 export function Magnetic({ children, strength = 0.35, radius = 80, className }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const quickX = useRef<((value: number) => void) | null>(null);
+  const quickY = useRef<((value: number) => void) | null>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const ctx = gsap.context(() => {
+      quickX.current = gsap.quickTo(ref.current, "x", {
+        duration: 0.3,
+        ease: "power2.out",
+      });
+      quickY.current = gsap.quickTo(ref.current, "y", {
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    }, ref);
+
+    return () => {
+      quickX.current = null;
+      quickY.current = null;
+      ctx.revert();
+    };
+  }, []);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
-      if (!ref.current) return;
+      if (!ref.current || !quickX.current || !quickY.current) return;
       if (window.matchMedia("(pointer: coarse)").matches) return;
 
       const rect = ref.current.getBoundingClientRect();
@@ -30,25 +53,17 @@ export function Magnetic({ children, strength = 0.35, radius = 80, className }: 
       const distance = Math.sqrt(distX * distX + distY * distY);
 
       if (distance < radius) {
-        gsap.to(ref.current, {
-          x: distX * strength,
-          y: distY * strength,
-          duration: 0.3,
-          ease: "power2.out",
-        });
+        quickX.current(distX * strength);
+        quickY.current(distY * strength);
       }
     },
     [strength, radius]
   );
 
   const handleMouseLeave = useCallback(() => {
-    if (!ref.current) return;
-    gsap.to(ref.current, {
-      x: 0,
-      y: 0,
-      duration: 0.5,
-      ease: "elastic.out(1, 0.4)",
-    });
+    if (!quickX.current || !quickY.current) return;
+    quickX.current(0);
+    quickY.current(0);
   }, []);
 
   return (
@@ -57,7 +72,7 @@ export function Magnetic({ children, strength = 0.35, radius = 80, className }: 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={className}
-      style={{ display: "inline-flex" }}
+      style={{ display: "inline-flex", willChange: "transform" }}
     >
       {children}
     </div>

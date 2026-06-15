@@ -100,7 +100,7 @@ export function Navigation() {
         { scaleX: 1, opacity: 1, duration: 0.6, ease: "none", stagger: 0.05 },
         0.3
       );
-    });
+    }, navWrapRef);
 
     return () => ctx.revert();
   }, []);
@@ -168,7 +168,7 @@ export function Navigation() {
           ═══════════════════════════════════════════ */}
       <div
         ref={navWrapRef}
-        className="dark-zone fixed top-0 left-0 right-0 z-50 hidden lg:block h-[80px] opacity-100"
+        className="dark-zone fixed top-0 left-0 right-0 z-50 hidden lg:block h-[80px] opacity-100 gpu-layer"
         style={{
           paddingLeft: "48px",
           paddingRight: "48px",
@@ -328,7 +328,7 @@ export function Navigation() {
       <div
         ref={drawerRef}
         id="mobile-nav-drawer"
-        className="mobile-drawer dark-zone fixed top-0 right-0 bottom-0 z-[56] lg:hidden flex flex-col w-full max-w-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className="mobile-drawer dark-zone fixed top-0 right-0 bottom-0 z-[56] lg:hidden flex flex-col w-full max-w-full gpu-layer transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{ transform: drawerOpen ? "translateX(0)" : "translateX(100%)" }}
         role="dialog"
         aria-modal="true"

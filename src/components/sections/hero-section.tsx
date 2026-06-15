@@ -56,118 +56,121 @@ export function HeroSection({ revealed = false, skipReveal = false, onReady }: H
   // ── Phase 2: Reveal ──
   useEffect(() => {
     if (phase !== "revealing" || !sectionRef.current) return;
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setPhase("ready");
-        onReady?.();
-      },
-    });
 
-    // Show content wrappers
-    tl.fromTo(
-      [desktopContentRef.current, mobileContentRef.current].filter(Boolean),
-      { opacity: 0 },
-      { opacity: 1, duration: 0.3, ease: "power2.out" },
-      0
-    );
-
-    const allFade = sectionRef.current.querySelectorAll("[data-hero-fade]");
-    const allLines = sectionRef.current.querySelectorAll("[data-hero-line]");
-    const nameEls = sectionRef.current.querySelectorAll("[data-hero-name]");
-    const marqueeEl = sectionRef.current.querySelectorAll("[data-hero-marquee]");
-    const infoBar = sectionRef.current.querySelectorAll("[data-hero-info]");
-    const scrollInd = sectionRef.current.querySelector("[data-hero-scroll]");
-
-    // Draw horizontal rules
-    tl.fromTo(
-      allLines,
-      { scaleX: 0 },
-      { scaleX: 1, duration: 0.7, ease: "power3.out", stagger: 0.1 },
-      "-=0.1"
-    );
-
-    // Fade in peripheral elements (top strip, bottom strip)
-    tl.fromTo(
-      allFade,
-      { opacity: 0, y: 6 },
-      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.03 },
-      "-=0.5"
-    );
-
-    // SplitText reveal — blur + scale spring stagger (RAJ, then DESAI)
     const splits: InstanceType<typeof SplitText>[] = [];
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    nameEls.forEach((el, index) => {
-      const textTarget = el.querySelector(".hero-name-text") ?? el;
-      const split = new SplitText(textTarget, { type: "chars", charsClass: "char" });
-      splits.push(split);
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          setPhase("ready");
+          onReady?.();
+        },
+      });
 
-      if (prefersReducedMotion) {
-        tl.fromTo(
-          split.chars,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.45, stagger: 0.02, ease: "power2.out" },
-          index === 0 ? "-=0.3" : "-=0.5"
-        );
-      } else {
-        tl.fromTo(
-          split.chars,
-          { ...HERO_CHAR_FROM },
-          { ...HERO_CHAR_TO },
-          index === 0 ? "-=0.3" : "-=0.5"
-        );
-      }
-
-      // Fade in marquee between NORTH and BOUND
-      if (index === 0 && marqueeEl.length > 0) {
-        tl.fromTo(
-          marqueeEl,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.5, ease: "power3.out" },
-          "-=0.4"
-        );
-      }
-
-      // Subtitle — sync with NORTH/BOUND reveal (not after dot)
-      if (index === 0 && infoBar.length > 0) {
-        tl.fromTo(
-          infoBar,
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-          "-=0.3"
-        );
-      }
-
-      // Geometric accent dot — elastic pop after DESAI letters finish
-      const dot = el.querySelector("[data-hero-dot]");
-      if (dot) {
-        tl.fromTo(
-          dot,
-          { scale: 0, opacity: 0 },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 0.7,
-            ease: prefersReducedMotion ? "power2.out" : "elastic.out(1, 0.5)",
-          },
-          ">"
-        );
-      }
-    });
-
-    // Scroll indicator
-    if (scrollInd) {
+      // Show content wrappers
       tl.fromTo(
-        scrollInd,
+        [desktopContentRef.current, mobileContentRef.current].filter(Boolean),
         { opacity: 0 },
-        { opacity: 1, duration: 0.4, ease: "power2.out" },
-        "-=0.2"
+        { opacity: 1, duration: 0.3, ease: "power2.out" },
+        0
       );
-    }
+
+      const allFade = sectionRef.current!.querySelectorAll("[data-hero-fade]");
+      const allLines = sectionRef.current!.querySelectorAll("[data-hero-line]");
+      const nameEls = sectionRef.current!.querySelectorAll("[data-hero-name]");
+      const marqueeEl = sectionRef.current!.querySelectorAll("[data-hero-marquee]");
+      const infoBar = sectionRef.current!.querySelectorAll("[data-hero-info]");
+      const scrollInd = sectionRef.current!.querySelector("[data-hero-scroll]");
+
+      // Draw horizontal rules
+      tl.fromTo(
+        allLines,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.7, ease: "power3.out", stagger: 0.1 },
+        "-=0.1"
+      );
+
+      // Fade in peripheral elements (top strip, bottom strip)
+      tl.fromTo(
+        allFade,
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.03 },
+        "-=0.5"
+      );
+
+      // SplitText reveal — blur + scale spring stagger (RAJ, then DESAI)
+      nameEls.forEach((el, index) => {
+        const textTarget = el.querySelector(".hero-name-text") ?? el;
+        const split = new SplitText(textTarget, { type: "chars", charsClass: "char" });
+        splits.push(split);
+
+        if (prefersReducedMotion) {
+          tl.fromTo(
+            split.chars,
+            { opacity: 0 },
+            { opacity: 1, duration: 0.45, stagger: 0.02, ease: "power2.out" },
+            index === 0 ? "-=0.3" : "-=0.5"
+          );
+        } else {
+          tl.fromTo(
+            split.chars,
+            { ...HERO_CHAR_FROM },
+            { ...HERO_CHAR_TO },
+            index === 0 ? "-=0.3" : "-=0.5"
+          );
+        }
+
+        // Fade in marquee between NORTH and BOUND
+        if (index === 0 && marqueeEl.length > 0) {
+          tl.fromTo(
+            marqueeEl,
+            { opacity: 0 },
+            { opacity: 1, duration: 0.5, ease: "power3.out" },
+            "-=0.4"
+          );
+        }
+
+        // Subtitle — sync with NORTH/BOUND reveal (not after dot)
+        if (index === 0 && infoBar.length > 0) {
+          tl.fromTo(
+            infoBar,
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+            "-=0.3"
+          );
+        }
+
+        // Geometric accent dot — elastic pop after DESAI letters finish
+        const dot = el.querySelector("[data-hero-dot]");
+        if (dot) {
+          tl.fromTo(
+            dot,
+            { scale: 0, opacity: 0 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.7,
+              ease: prefersReducedMotion ? "power2.out" : "elastic.out(1, 0.5)",
+            },
+            ">"
+          );
+        }
+      });
+
+      // Scroll indicator
+      if (scrollInd) {
+        tl.fromTo(
+          scrollInd,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.4, ease: "power2.out" },
+          "-=0.2"
+        );
+      }
+    }, sectionRef);
 
     return () => {
-      tl.kill();
+      ctx.revert();
       splits.forEach((s) => s.revert());
     };
   }, [phase, onReady]);

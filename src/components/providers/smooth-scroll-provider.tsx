@@ -1,13 +1,37 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
-const LenisContext = createContext<Lenis | null>(null);
+type LenisListener = () => void;
+
+const lenisListeners = new Set<LenisListener>();
+let lenisInstance: Lenis | null = null;
+
+function subscribeLenis(listener: LenisListener) {
+  lenisListeners.add(listener);
+  return () => {
+    lenisListeners.delete(listener);
+  };
+}
+
+function getLenisSnapshot() {
+  return lenisInstance;
+}
+
+function setLenisInstance(instance: Lenis | null) {
+  lenisInstance = instance;
+  lenisListeners.forEach((listener) => listener());
+}
 
 export function useLenis() {
-  return useContext(LenisContext);
+  return useSyncExternalStore(subscribeLenis, getLenisSnapshot, () => null);
 }
 
 export function resetPageScroll(lenis?: Lenis | null) {
@@ -15,8 +39,10 @@ export function resetPageScroll(lenis?: Lenis | null) {
     history.scrollRestoration = "manual";
   }
 
-  if (lenis) {
-    lenis.scrollTo(0, { immediate: true, force: true });
+  const instance = lenis ?? lenisInstance;
+
+  if (instance) {
+    instance.scrollTo(0, { immediate: true, force: true });
   }
 
   window.scrollTo({ top: 0, left: 0, behavior: "instant" });
@@ -25,7 +51,7 @@ export function resetPageScroll(lenis?: Lenis | null) {
 }
 
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
-  const [lenis, setLenis] = useState<Lenis | null>(null);
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     const instance = new Lenis({
@@ -36,8 +62,9 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       anchors: { offset: -80 },
     });
 
+    lenisRef.current = instance;
+    setLenisInstance(instance);
     resetPageScroll(instance);
-    setLenis(instance);
 
     instance.on("scroll", ScrollTrigger.update);
 
@@ -51,9 +78,10 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
     return () => {
       gsap.ticker.remove(tick);
       instance.destroy();
-      setLenis(null);
+      lenisRef.current = null;
+      setLenisInstance(null);
     };
   }, []);
 
-  return <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>;
+  return <>{children}</>;
 }

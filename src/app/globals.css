@@ -4,122 +4,6 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ───────────────────────────────────────────
-   Font Faces
-   ─────────────────────────────────────────── */
-
-@font-face {
-  font-family: "Clash Display";
-  src: url("/fonts/ClashDisplay-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Clash Display";
-  src: url("/fonts/ClashDisplay-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Clash Display";
-  src: url("/fonts/ClashDisplay-Semibold.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Clash Display";
-  src: url("/fonts/ClashDisplay-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Clash Display Variable";
-  src: url("/fonts/ClashDisplay-Variable.woff2") format("woff2-variations");
-  font-weight: 200 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("/fonts/Satoshi-Light.woff2") format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("/fonts/Satoshi-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("/fonts/Satoshi-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("/fonts/Satoshi-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Azeret Mono";
-  src: url("/fonts/AzeretMono-Light.woff2") format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Azeret Mono";
-  src: url("/fonts/AzeretMono-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Azeret Mono";
-  src: url("/fonts/AzeretMono-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Azeret Mono";
-  src: url("/fonts/AzeretMono-SemiBold.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Azeret Mono";
-  src: url("/fonts/AzeretMono-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* ───────────────────────────────────────────
    Design Tokens — Light Zone (Default)
    ─────────────────────────────────────────── */
 :root {
@@ -245,9 +129,9 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --font-display: "Clash Display", sans-serif;
-  --font-body: "Satoshi", sans-serif;
-  --font-mono: "Azeret Mono", monospace;
+  --font-display: var(--font-clash), sans-serif;
+  --font-body: var(--font-satoshi), sans-serif;
+  --font-mono: var(--font-azeret), monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -389,6 +273,8 @@
 .hero-marquee-track {
   animation: hero-marquee-scroll 50s linear infinite;
   will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes hero-marquee-scroll {
@@ -943,11 +829,15 @@ html.lenis body {
 .section-marquee-left {
   animation: section-marquee-scroll-left var(--marquee-speed, 20s) linear infinite;
   will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .section-marquee-right {
   animation: section-marquee-scroll-right var(--marquee-speed, 20s) linear infinite;
   will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes section-marquee-scroll-left {
@@ -1091,6 +981,7 @@ html.lenis body {
 .typo-list-row {
   position: relative;
   overflow: hidden;
+  transform: translateZ(0);
 }
 
 /* Accent sweep on hover (like contact strips) */
@@ -1119,4 +1010,110 @@ html.lenis body {
 /* Name goes accent on hover */
 .typo-list-row:hover .typo-row-name {
   color: var(--accent-raw) !important;
+}
+
+/* ───────────────────────────────────────────
+   Performance — GPU layers & paint-optimized hovers
+   ─────────────────────────────────────────── */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.bento-stat-card {
+  position: relative;
+  isolation: isolate;
+  transform: translateZ(0);
+  will-change: transform;
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-stat-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.3);
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.bento-stat-card:hover,
+.bento-stat-card:focus-within {
+  transform: translateY(-0.375rem) translateZ(0);
+}
+
+.bento-stat-card:hover::after,
+.bento-stat-card:focus-within::after {
+  opacity: 1;
+}
+
+.skill-badge-pill {
+  position: relative;
+  isolation: isolate;
+  transform: translateZ(0);
+  will-change: transform;
+  transition:
+    transform 0.3s ease-out,
+    background-color 0.3s ease-out,
+    color 0.3s ease-out,
+    border-color 0.3s ease-out;
+}
+
+.skill-badge-pill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 8px 16px -6px rgba(37, 99, 235, 0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.skill-badge-pill:hover {
+  transform: translateY(-0.25rem) translateZ(0);
+}
+
+.skill-badge-pill:hover::after {
+  opacity: 1;
+}
+
+.contact-submit-glow {
+  position: relative;
+  isolation: isolate;
+  transform: translateZ(0);
+  will-change: transform;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.contact-submit-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 10px 20px -10px rgba(37, 99, 235, 0.6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.contact-submit-glow:hover:not(:disabled) {
+  transform: translateY(-0.25rem) translateZ(0);
+}
+
+.contact-submit-glow:hover:not(:disabled)::after {
+  opacity: 1;
+}
+
+.contact-submit-glow:disabled:hover {
+  transform: translateZ(0);
 }

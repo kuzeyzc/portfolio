@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import { gsap } from "@/lib/gsap";
 
 /* ──────────────────────────────────────────────────────────
@@ -20,7 +20,7 @@ interface SectionMarqueeProps {
   className?: string;
 }
 
-export function SectionMarquee({
+export const SectionMarquee = memo(function SectionMarquee({
   text,
   direction = "left",
   speed = 20,
@@ -118,4 +118,4 @@ export function SectionMarquee({
       <div className="h-px w-full" style={{ backgroundColor: "var(--border-custom)" }} />
     </div>
   );
-}
+});
