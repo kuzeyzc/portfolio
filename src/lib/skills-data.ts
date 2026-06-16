@@ -15,7 +15,7 @@ export const SKILLS: Skill[] = [
     pills: [
       "Adobe Photoshop",
       "Adobe Illustrator",
-      "Figma",
+      "Kurumsal Logo",
       "UI/UX Tasarımı",
       "After Effects",
       "Premiere Pro",

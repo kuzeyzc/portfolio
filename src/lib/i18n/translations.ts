@@ -48,7 +48,7 @@ export const translations: Record<"en" | "tr", SiteTranslations> = {
       ],
       stats: [
         {
-          title: "1000+",
+          title: "300+",
           subtitle: "Projects & References",
           desc: "Successful digital solutions across industries — where aesthetics and engineering meet.",
         },
@@ -77,7 +77,7 @@ export const translations: Record<"en" | "tr", SiteTranslations> = {
         pills: [
           "Adobe Photoshop",
           "Adobe Illustrator",
-          "Figma",
+          "Brand Identity Logo",
           "UI/UX Design",
           "After Effects",
           "Premiere Pro",
@@ -308,7 +308,7 @@ export const translations: Record<"en" | "tr", SiteTranslations> = {
       ],
       stats: [
         {
-          title: "1000+",
+          title: "300+",
           subtitle: "PROJE & REFERANS",
           desc: "Farklı sektörlerden markalar için üretilmiş, estetik ve mühendisliği birleştiren başarılı dijital çözümler.",
         },
@@ -337,7 +337,7 @@ export const translations: Record<"en" | "tr", SiteTranslations> = {
         pills: [
           "Adobe Photoshop",
           "Adobe Illustrator",
-          "Figma",
+          "Kurumsal Logo",
           "UI/UX Tasarımı",
           "After Effects",
           "Premiere Pro",

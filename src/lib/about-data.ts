@@ -25,7 +25,7 @@ export type AboutStat = { title: string; subtitle: string; desc: string };
 
 export const ABOUT_STATS: AboutStat[] = [
   {
-    title: "1000+",
+    title: "300+",
     subtitle: "PROJE & REFERANS",
     desc: "Farklı sektörlerden markalar için üretilmiş, estetik ve mühendisliği birleştiren başarılı dijital çözümler.",
   },

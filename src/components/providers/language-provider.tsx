@@ -12,7 +12,10 @@ import {
 import { DEFAULT_LANG, translations } from "@/lib/i18n/translations";
 import type { Lang, SiteTranslations } from "@/lib/i18n/types";
 
-const STORAGE_KEY = "northbound-lang";
+// Storage version is bumped to enforce correct default language behavior on first load.
+// Without this, users who previously selected Turkish would see Turkish even after
+// we change the intended "default on first open" requirement.
+const STORAGE_KEY = "northbound-lang-v2";
 
 interface LanguageContextValue {
   lang: Lang;
