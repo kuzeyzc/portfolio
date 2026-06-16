@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "NorthBound Studio",
   description:
     "2018'den bu yana estetiği mühendislikle harmanlayan NorthBound; markalar için kusursuz dijital deneyimler ve otonom sistemler inşa eder.",
-  metadataBase: new URL("https://northbound.studio"),
+  metadataBase: new URL("https://nrthbound.me"),
   keywords: [
     "NorthBound",
     "full-stack developer",
@@ -58,6 +58,11 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
+  icons: {
+    icon: "/333333.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
 };
 
 export const viewport: Viewport = {
@@ -74,13 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${clashDisplay.variable} ${satoshi.variable} ${azeretMono.variable}`}
     >
       <head>
-        {/* Favicon */}
-        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
-        <link rel="manifest" href="/site.webmanifest" />
 
         {/* Lock scroll position before hydration */}
         <script
